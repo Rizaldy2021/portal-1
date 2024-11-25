@@ -1,38 +1,28 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('landing');
+    return view('welcome');
 });
 
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
-Route::get('/welcome', function () {
-    return view('welcome');
-}) ->name('welcome');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 Route::get('/admin', function () {
     return view('admin.adminDashboard');
-});
+}) -> middleware(['auth', 'verified', 'role:admin']);
 
 Route::get('/user', function () {
     return view('user.userDashboard');
-});
+}) -> middleware(['auth', 'verified', 'role:user']);
 
-Route::middleware(['role:admin'])->group(function () {
-    Route::get('/admin', function () {
-        // Only accessible by admin users
-        return view('admin.adminDashboard');
-    });
-});
-
-Route::middleware(['role:user'])->group(function () {
-    Route::get('/admin', function () {
-        // Only accessible by admin users
-        return view('user.userDashboard');
-    });
-});
+require __DIR__.'/auth.php';
