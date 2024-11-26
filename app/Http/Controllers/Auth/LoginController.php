@@ -16,8 +16,14 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
+        // if (Auth::attempt(['email' => $credentials['username'], 'password' => $credentials['password']])) {
+        //     return redirect()->intended('/admin');
+
         if (Auth::attempt(['email' => $credentials['username'], 'password' => $credentials['password']])) {
-            return redirect()->intended('/admin');
+            $role = Auth::user()->roles;
+            $roleNames = $role->pluck('name')->toArray();
+            $role = $roleNames->first();
+            return redirect()->route($role);
         }
 
         throw ValidationException::withMessages([

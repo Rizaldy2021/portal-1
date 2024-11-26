@@ -19,10 +19,10 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/admin', function () {
     return view('admin.adminDashboard');
-}) -> middleware(['auth', 'verified', 'role:admin']);
+}) -> middleware(['auth', 'verified', 'role:admin'])->name('admin');
 
 Route::get('/user', function () {
     return view('user.userDashboard');
-}) -> middleware(['auth', 'verified', 'role:user']);
+}) -> middleware(['auth', 'verified', 'role:user'])->name('user');
 
 require __DIR__.'/auth.php';

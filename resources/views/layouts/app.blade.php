@@ -27,6 +27,13 @@
                 </header>
             @endisset
 
+            <!-- page Sidebar -->
+            @isset($sidebar)
+                <aside class="flex pr-2">
+                    {{ $sidebar }}
+                </aside>
+            @endisset
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}

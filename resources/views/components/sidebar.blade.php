@@ -2,8 +2,8 @@
     <div class="sidebar-header p-4">
         <h2 class="text-xl font-bold">Dashboard</h2>
     </div>
-    <nav class="sidebar-nav mt-4">
-        <div class="mt-4">
+    <nav class="sidebar-nav mt-4 text-sm">
+        <div class="mt-4 mr-1">
             <h3 class="text-lg font-medium">General</h3>
             <a href="#" class="flex items-center flex-row gap-2 hover:bg-[#a59eff] rounded p-2 content-center">
                 <img src="{{ asset('icon/home.svg') }}" alt="navIcon">
@@ -13,7 +13,7 @@
                 <img src="{{ asset('icon/inbox.svg') }}" alt="navIcon">
                 Inbox
             </a>
-            <a href="{{ route('welcome') }}" class="flex items-center flex-row gap-2 hover:bg-[#a59eff] rounded p-2 content-center">
+            <a href="#" class="flex items-center flex-row gap-2 hover:bg-[#a59eff] rounded p-2 content-center">
                 <img src="{{ asset('icon/folder.svg') }}" alt="navIcon">
                 File Explorer
             </a>
