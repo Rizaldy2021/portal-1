@@ -1,7 +1,24 @@
-import './bootstrap';
+import "./bootstrap";
+import * as FilePond from "filepond";
+import "filepond/dist/filepond.min.css";
 
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 
 Alpine.start();
+
+const inputElement = document.querySelector('input[type="file"].filepond');
+
+const csrfToken = document.head
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
+
+FilePond.create(inputElement, {
+    server: {
+        url: "/upload",
+        headers: {
+            "X-CSRF-TOKEN": csrfToken,
+        },
+    },
+});

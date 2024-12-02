@@ -3,12 +3,26 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\fileController;
+use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\FolderController;
 
 Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/view', function () {
     return view('test');
 });
 
-// Route::get('/', [fileController::class, 'index'])->name('test');
+Route::get('/view', [fileController::class, 'index'])->name('test');
+
+Route::get('/coba', function () {
+    return view('upload');
+});
+
+Route::post('/upload', [FileUploadController::class, 'upload'])->name('file.upload');
+
+Route::get('/folder/{id}', [FolderController::class, 'show'])->name('folder.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -2,6 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     @include('includes.head')
+    <link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 </head>
 <body class="flex bg-[#f4f3f3] font-[poppins] pl-[16px]">
     <aside class="flex pr-2">

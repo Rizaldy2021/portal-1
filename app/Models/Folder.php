@@ -19,4 +19,9 @@ class Folder extends Model
         'description',
         'user_id',
     ];
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
 }
