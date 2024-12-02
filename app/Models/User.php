@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function getUserRoles()
+    {
+        return $this->getRoleNames(); // Returns a collection of role names
+    }
 }
