@@ -40,7 +40,7 @@ class FileUploadController extends Controller
     private function storePermanent(UploadedFile $file, ?int $folderId = null): string
     {
         // Simpan file ke folder 'uploads'
-        $filePath = $file->store('test');
+        $filePath = $file->store('test', 'public');
 
         // Dapatkan informasi file
         $fileName = $file->getClientOriginalName();

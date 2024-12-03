@@ -8,18 +8,14 @@ use Illuminate\View\Component;
 
 class folderCard extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public $folder;
+
+    public function __construct($folder)
     {
-        //
+        $this->folder = $folder;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
+    public function render()
     {
         return view('components.folder-card');
     }

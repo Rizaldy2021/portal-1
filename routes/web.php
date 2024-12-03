@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\fileController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileUploadController;
-use App\Http\Controllers\FolderController;
+use App\Http\Controllers\folderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,19 +14,27 @@ Route::get('/view', function () {
     return view('test');
 });
 
-Route::get('/view', [fileController::class, 'index'])->name('test');
-
 Route::get('/coba', function () {
     return view('upload');
 });
 
-Route::post('/upload', [FileUploadController::class, 'upload'])->name('file.upload');
-
-Route::get('/folder/{id}', [FolderController::class, 'show'])->name('folder.show');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/view', [FileController::class, 'index'])->name('test');
+
+Route::post('/upload', [FileUploadController::class, 'upload'])->name('file.upload');
+
+Route::get('/folder/{id}', [folderController::class, 'show'])->name('folder.show');
+
+Route::get('/folders', [FolderController::class, 'index'])->name('folder.index');
+
+Route::get('/folder/{id}', [FolderController::class, 'show'])->name('folder.show');
+
+Route::get('/files', [FileController::class, 'index'])->name('files.index');
+
+Route::get('/files/{id}/view', [FileController::class, 'view'])->name('files.view');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

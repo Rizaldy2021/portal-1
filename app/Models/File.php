@@ -22,4 +22,9 @@ class File extends Model
         'user_id',
         'folder_id',
     ];
+
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class, 'folder_id');
+    }
 }

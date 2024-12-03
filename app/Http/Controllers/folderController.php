@@ -7,9 +7,15 @@ use App\Models\Folder;
 
 class folderController extends Controller
 {
+    public function index()
+    {
+        $folders = Folder::with(['childern','files'])->whereNull('parent_id')->get();
+        return view('folder.index', compact('folders'));
+    }
+
     public function show($id)
     {
-        $folder = Folder::with('files')->findOrFail($id); // Pastikan relasi 'files' sudah diatur di model
+        $folder = Folder::with(['childern','files'])->findOrFail($id);
         return view('folder.show', compact('folder'));
     }
 }

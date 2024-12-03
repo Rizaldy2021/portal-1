@@ -20,6 +20,16 @@ class Folder extends Model
         'user_id',
     ];
 
+    public function childern()
+    {
+        return $this->hasMany(Folder::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Folder::class,'parent_id');
+    }
+
     public function files()
     {
         return $this->hasMany(File::class);
