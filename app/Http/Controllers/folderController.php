@@ -16,6 +16,7 @@ class folderController extends Controller
     public function show($id)
     {
         $folder = Folder::with(['childern','files'])->findOrFail($id);
-        return view('folder.show', compact('folder'));
+        $folders = Folder::where('parent_id', '=', $id)->get();
+        return view('folder.show', compact('folder', 'folders'));
     }
 }

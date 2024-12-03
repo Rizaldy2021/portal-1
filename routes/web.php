@@ -34,12 +34,13 @@ Route::get('/folder/{id}', [FolderController::class, 'show'])->name('folder.show
 
 Route::get('/files', [FileController::class, 'index'])->name('files.index');
 
-Route::get('/files/{id}/view', [FileController::class, 'view'])->name('files.view');
+// Route::get('/files/{id}/view', [FileController::class, 'view'])->name('files.view');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'check.file.access')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('files/{file}', [FileController::class, 'view'])->name('files.view');
 });
 
 Route::get('/admin', function () {
