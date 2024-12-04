@@ -25,14 +25,5 @@ class fileController extends Controller
         return view('view-file', compact('file','fileUrl'));
     }
 
-    // public function view(File $file)
-    // {
-    //     // Pastikan pengguna memiliki izin
-    //     if (Auth::id() !== $file->user_id && Auth::user()->role !== 'admin') {
-    //         abort(403, 'Access denied');
-    //     }
-
-    //     $fileUrl = Storage::url($file->path);
-    //     return view('view-file', compact('file', 'fileUrl'));
-    // }
+    
 }
