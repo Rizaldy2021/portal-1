@@ -20,7 +20,7 @@ class Folder extends Model
         'user_id',
     ];
 
-    public function childern()
+    public function children()
     {
         return $this->hasMany(Folder::class, 'parent_id');
     }

@@ -19,10 +19,12 @@ class CheckFileAccess
         $user = Auth::user();
         $file = request()->route('file');
 
-        if ($file->user_id == $user->id || $user->role == 'admin') {
-            return $next($request);
+        if(!$file || ($file->user_id != $user->id && $user->role != 'admin')) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
         }
 
-        return response()->json(['message' => 'Access denied'], 403);
+        return $next($request);
     }
 }

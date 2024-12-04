@@ -13,8 +13,8 @@
             <div class="parent-folder">
                 <h2 class="text-gray-600">Folder</h2>
                 <div class="bg-white w-full py-2 gap-4 flex flex-wrap">
-                    @foreach ($folders as $folder)
-                        <x-folderCard :folder="$folder">{{ $folder->name }}</x-folderCard>
+                    @foreach ($folders as $currentFolder)
+                        <x-folderCard :folder="$currentFolder">{{ $currentFolder->name }}</x-folderCard>
                     @endforeach
                 </div>
             </div>
