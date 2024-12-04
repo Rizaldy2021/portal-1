@@ -11,10 +11,23 @@ use Illuminate\Support\Facades\Auth;
 
 class fileController extends Controller
 {
+    // public function index(Request $request): View
+    // {
+    //     $files = File::all();
+    //     $folders = Folder::with(['children','files'])->whereNull('parent_id')->get();
+    //     return view('test', compact('files', 'folders'));
+    // }
+
     public function index(Request $request): View
     {
-        $files = File::all();
+        if(Auth::user()->role == 'admin') {
+            $files = File::all();
+        } else {
+            $files = File::where('user_id', Auth::user()->id)->get();
+        }
+
         $folders = Folder::with(['children','files'])->whereNull('parent_id')->get();
+
         return view('test', compact('files', 'folders'));
     }
 
@@ -25,5 +38,5 @@ class fileController extends Controller
         return view('view-file', compact('file','fileUrl'));
     }
 
-    
+
 }
