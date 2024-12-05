@@ -16,9 +16,13 @@ const csrfToken = document.head
 
 FilePond.create(inputElement, {
     server: {
-        url: "/upload",
-        headers: {
-            "X-CSRF-TOKEN": csrfToken,
+        process: {
+            url: "/upload",
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": csrfToken,
+            },
         },
     },
+    allowMultiple: true,
 });

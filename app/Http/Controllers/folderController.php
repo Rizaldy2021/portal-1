@@ -13,7 +13,7 @@ class folderController extends Controller
     {
         $user = $this->hasRole();
 
-        if($user->role == 'admin') {
+        if ($user->role == 'admin') {
             $folders = Folder::with(['children','files'])->whereNull('parent_id')->get();
         } else {
             $folders = Folder::with(['children','files'])
@@ -22,7 +22,8 @@ class folderController extends Controller
                 ->get();
         }
 
-        return view('folder.index', compact('folders'));
+        // return view('folders.index', compact('folders'));
+        return $folders;
     }
 
     public function show($id)
@@ -33,14 +34,14 @@ class folderController extends Controller
 
         $folders = Folder::where('parent_id', '=', $id)->get();
 
-        return view('folder.show', compact('folder', 'folders'));
+        return view('folders.show', compact('folder', 'folders'));
     }
 
     public function create()
     {
         $parentFolders = Folder::where('user_id', Auth::id())->get();
 
-        return view('folder.create', compact('parentFolders'));
+        return view('folders.create', compact('parentFolders'));
     }
 
     public function store(Request $request)
@@ -58,7 +59,7 @@ class folderController extends Controller
             'parent_id' => $request->parent_id
         ]);
 
-        return redirect()->route('folder.index')->with('success', 'Folder created successfully.');
+        return redirect()->route('folders.index')->with('success', 'Folder created successfully.');
     }
 
     public function edit(Folder $folder)
@@ -69,7 +70,7 @@ class folderController extends Controller
             ->where('id', '!=', $folder->id)
             ->get();
 
-        return view('folder.edit', compact('folder', 'parentFolders'));
+        return view('folders.edit', compact('folder', 'parentFolders'));
     }
 
     public function update(Request $request, Folder $folder)
@@ -88,7 +89,7 @@ class folderController extends Controller
             'parent_id' => $request->parent_id
         ]);
 
-        return redirect()->route('folder.index')->with('success', 'Folder updated successfully.');
+        return redirect()->route('folders.index')->with('success', 'Folder updated successfully.');
     }
 
     public function destroy(Folder $folder)
@@ -96,12 +97,14 @@ class folderController extends Controller
         $this->authorizeAccess($folder);
 
         $folder->delete();
-        return redirect()->route('folder.index')->with('success', 'Folder deleted successfully.');
+        return redirect()->route('folders.index')->with('success', 'Folder deleted successfully.');
     }
 
     private function authorizeAccess(Folder $folder)
     {
-        if ($folder->user_id !== Auth::id()) {
+        $user = Auth::user();
+        $userRole = $this->hasRole();
+        if ($folder->user_id != Auth::id() && $userRole->role != 'admin') {
             abort(403, 'Unauthorized');
         }
     }

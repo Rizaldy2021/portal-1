@@ -4,14 +4,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileUploadController;
-use App\Http\Controllers\folderController;
+use App\Http\Controllers\FolderController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/view', function () {
-    return view('test');
+    $files = app(FileController::class)->index(request());
+    $folders = app(FolderController::class)->index();
+    return view('test', compact('files', 'folders'));
 });
 
 Route::get('/coba', function () {
@@ -22,35 +25,25 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/view', [FileController::class, 'index'])->name('test');
+Route::post('/upload', [FileUploadController::class, 'upload'])->name('files.upload');
 
-Route::post('/upload', [FileUploadController::class, 'upload'])->name('file.upload');
-
-Route::get('/folder/{id}', [folderController::class, 'show'])->name('folder.show');
-
-Route::get('/folders', [FolderController::class, 'index'])->name('folder.index');
-
-// Route::get('/folder/{id}', [FolderController::class, 'show'])->name('folder.show');
-
-
-// Route::get('/files/{id}/view', [FileController::class, 'view'])->name('files.view');
+Route::post('/folders', [FolderController::class, 'store'])->name('folders.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/files', [FileController::class, 'index'])->name('files.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // Route::resource('folders', FolderController::class);
-    Route::post('/folders', [FolderController::class, 'store'])->name('folder.store');
-
-    Route::middleware('auth')->group(function () {
-        Route::get('/files/{file}/view', [FileController::class, 'view'])->name('files.view');
-    });
 });
 
-Route::middleware(['auth', 'check.folder.access'])->group(function () {
-    Route::get('/folders/{id}', [FolderController::class, 'show'])->name('folder.show');
+Route::middleware('auth')->group(function () {
+    Route::get('/files', [FileController::class, 'index'])->name('files.index');
+    Route::get('/files/{id}', [FileController::class, 'view'])->name('files.view');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
+    Route::get('/folders/{id}', [FolderController::class, 'show'])->name('folders.show');
 });
 
 Route::get('/admin', function () {

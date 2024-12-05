@@ -12,15 +12,16 @@
     <main class="bg-white pr-4 rounded-s-[34px] p-4 w-screen">
         <h1 class="text-2xl font-medium mb-4">File Explorer</h1>
         <div class="flex flex-col gap-10">
-            <form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('files.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <label for="file" class="block font-medium mb-2">Upload File:</label>
                 <input 
                     type="file" 
-                    name="file" 
+                    name="file[]" 
                     id="file" 
                     required 
                     class="border p-2 rounded w-full mb-4"
+                    multiple
                 >
 
                 <label for="folder_id" class="block font-medium mb-2">Folder ID (optional):</label>
@@ -40,7 +41,7 @@
                 </button>
             </form>
 
-            <form action="{{ route('folder.store') }}" method="POST">
+            <form action="{{ route('folders.store') }}" method="POST">
                 @csrf
                 <label for="name" class="block font-medium mb-2">Folder Name:</label>
                 <input 
