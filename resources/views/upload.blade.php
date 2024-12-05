@@ -40,6 +40,44 @@
                 </button>
             </form>
 
+            <form action="{{ route('folder.store') }}" method="POST">
+                @csrf
+                <label for="name" class="block font-medium mb-2">Folder Name:</label>
+                <input 
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    required 
+                    class="border p-2 rounded w-full mb-4"
+                >
+            
+                <label for="description" class="block font-medium mb-2">Folder Description (optional):</label>
+                <textarea 
+                    name="description" 
+                    id="description" 
+                    rows="3" 
+                    class="border p-2 rounded w-full mb-4"
+                ></textarea>
+            
+                <!-- Change parent_id to a text input -->
+                <label for="parent_id" class="block font-medium mb-2">Parent Folder ID (optional):</label>
+                <input 
+                    type="text" 
+                    name="parent_id" 
+                    id="parent_id" 
+                    value="{{ old('parent_id') }}" 
+                    placeholder="Enter parent folder ID (optional)" 
+                    class="border p-2 rounded w-full mb-4"
+                >
+            
+                <button 
+                    type="submit" 
+                    class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                >
+                    Create Folder
+                </button>
+            </form>
+
             <!-- Display success message -->
             @if(session('success'))
                 <div class="mt-4 p-4 bg-green-100 text-green-800 rounded">

@@ -14,7 +14,7 @@
                 <h2 class="text-gray-600">Folder</h2>
                 <div class="bg-white w-full py-2 gap-4 flex flex-wrap">
                     @foreach ($folders as $currentFolder)
-                        <x-folderCard :folder="$currentFolder">{{ $currentFolder->name }}</x-folderCard>
+                        <x-folderCard :folder="$currentFolder">Folder {{ $currentFolder->id }}</x-folderCard>
                     @endforeach
                 </div>
             </div>
