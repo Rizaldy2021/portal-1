@@ -1,5 +1,18 @@
-body {
+/* body {
     background-image: url(../img/bg-login.svg);
     background-position-y: bottom;
     background-repeat: no-repeat;
+} */
+
+.drop-zone {
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.drop-zone.highlight {
+    border-color: #4a90e2;
+    background-color: #f0f8ff;
 }
