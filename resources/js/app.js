@@ -79,3 +79,26 @@ if (inputElement) {
 } else {
     console.error("File input element not found");
 }
+
+let root = document.getElementById("file-explorer");
+
+const options = [
+    {
+        title: "Console.log",
+        onclick: function () {
+            console.log("Hello!");
+        },
+    },
+    {
+        title: "Show Alert",
+        onclick: function () {
+            alert("Hello!");
+        },
+    },
+];
+
+const contextmenu = Contextmenu(root, {
+    options: options,
+});
+
+document.addEventListener("click", (event) => {});
