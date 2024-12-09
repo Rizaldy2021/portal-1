@@ -1,6 +1,7 @@
 import "./bootstrap";
 import * as FilePond from "filepond";
 import "filepond/dist/filepond.min.css";
+import VanillaContextMenu from "vanilla-context-menu";
 
 import Alpine from "alpinejs";
 
@@ -27,13 +28,13 @@ if (inputElement) {
         },
         allowMultiple: true,
         dropOnElement: true,
-        allowProcessment: false,
+        // allowProcessment: false,
     });
 
     console.log("FilePond initialized:", pond);
 
     // Drop zone logic
-    const dropElement = document.getElementById("drop-element");
+    const dropElement = document.querySelector("main");
 
     if (dropElement) {
         console.log("Drop zone found:", dropElement);
@@ -80,25 +81,24 @@ if (inputElement) {
     console.error("File input element not found");
 }
 
-let root = document.getElementById("file-explorer");
-
-const options = [
-    {
-        title: "Console.log",
-        onclick: function () {
-            console.log("Hello!");
+new VanillaContextMenu({
+    scope: document.getElementById("file-explorer"),
+    menuItems: [
+        {
+            label: "Buat Folder",
+            callback: () => {
+                console.log("Buat Folder");
+                document.dispatchEvent(new CustomEvent("open-folder-modal"));
+            },
         },
-    },
-    {
-        title: "Show Alert",
-        onclick: function () {
-            alert("Hello!");
+        {
+            label: "Upload File",
+            callback: () => {
+                console.log("Upload File");
+            },
         },
-    },
-];
-
-const contextmenu = Contextmenu(root, {
-    options: options,
+    ],
+    transitionDuration: 75,
+    theme: "white",
+    customClass: "custom-context-menu-cls",
 });
-
-document.addEventListener("click", (event) => {});

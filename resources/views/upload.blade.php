@@ -10,9 +10,9 @@
     <aside class="flex pr-2">
         <x-sidebar/>
     </aside>
-    <main class="bg-white pr-4 rounded-s-[34px] p-4 w-screen">
+    <main class="bg-white pr-4 rounded-s-[34px] p-4 w-screen drop-zone filepond" id="drop-zone">
         <h1 class="text-2xl font-medium mb-4">File Explorer</h1>
-        <div class="flex flex-col gap-10 drop-zone filepond" id="drop-element">
+        <div class="flex flex-col gap-10" id="drop-element">
             <form action="{{ route('files.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <label for="file" class="block font-medium mb-2">Upload File:</label>
@@ -21,7 +21,7 @@
                     name="file[]" 
                     id="filepond" 
                     required 
-                    class="border p-2 rounded w-full mb-4"
+                    class="border p-2 rounded w-full mb-4 filepond"
                     multiple
                 >
 
@@ -87,6 +87,8 @@
                 </div>
             @endif
         </div>
+
+        
     </main>
 </body>
 </html>
