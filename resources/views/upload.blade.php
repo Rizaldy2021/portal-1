@@ -87,7 +87,46 @@
                 </div>
             @endif
         </div>
-
+        <script>
+            // Get the drop zone and file input
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('filepond');
+    
+            // Add dragover event to allow dropping
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragging'); // Change the drop zone style
+            });
+    
+            // Remove the "dragging" style when dragging leaves the drop zone
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('dragging');
+            });
+    
+            // Handle the drop event
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragging'); // Remove the "dragging" style
+    
+                // Get the dropped files and add them to the file input
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files; // Set the files of the input element
+                }
+            });
+    
+            // Optional: Trigger file input click when the drop zone is clicked
+            dropZone.addEventListener('click', () => {
+                fileInput.click();
+            });
+    
+            // Optional: Handle file selection via the file input
+            fileInput.addEventListener('change', (e) => {
+                // You can handle the selected files if needed here
+                const files = e.target.files;
+                console.log(files); // Log the selected files
+            });
+        </script>
         
     </main>
 </body>

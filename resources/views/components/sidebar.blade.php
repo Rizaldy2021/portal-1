@@ -5,7 +5,7 @@
     <nav class="sidebar-nav mt-4 text-sm">
         <div class="mt-4 mr-1">
             <h3 class="text-lg font-medium">General</h3>
-            <a href="#" class="flex items-center flex-row gap-2 hover:bg-[#a59eff] rounded p-2 content-center">
+            <a href="{{ route('view') }}" class="flex items-center flex-row gap-2 hover:bg-[#a59eff] rounded p-2 content-center active:bg-[#a59eff] focus:bg-[#a59eff]">
                 <img src="{{ asset('icon/home.svg') }}" alt="navIcon">
                 Home
             </a>

@@ -15,7 +15,7 @@ Route::get('/view', function () {
     $files = app(FileController::class)->index(request());
     $folders = app(FolderController::class)->index();
     return view('test', compact('files', 'folders'));
-});
+})->name('view');
 
 Route::get('/coba', function () {
     return view('upload');
@@ -36,13 +36,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/files', [FileController::class, 'index'])->name('files.index');
+Route::get('/files', [FileController::class, 'index'])->name('files.index');
+Route::middleware('auth', 'check.file.acceess')->group(function () {
     Route::get('/files/{id}', [FileController::class, 'view'])->name('files.view');
 });
 
-Route::middleware(['auth', 'web'])->group(function () {
-    Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
+
+
+Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
+Route::middleware(['auth', 'check.folder.access'])->group(function () {
     Route::get('/folders/{id}', [FolderController::class, 'show'])->name('folders.show');
 });
 

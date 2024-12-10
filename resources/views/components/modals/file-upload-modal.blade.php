@@ -1,4 +1,4 @@
-<div class="hidden fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50" id="new-file-modal">
+<div class="hidden flex fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50" id="new-file-modal">
     <div class="bg-white p-4 rounded-lg">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Upload</h2>
@@ -17,6 +17,7 @@
                 required 
                 multiple
             >
+            <input type="hidden" value="{{ $folderId ?? null }}" name="folder_id">
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mt-4">Upload</button>
         </form>
     </div>

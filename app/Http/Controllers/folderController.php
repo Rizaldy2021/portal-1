@@ -33,16 +33,15 @@ class folderController extends Controller
         $this->authorizeAccess($folder);
 
         $folders = Folder::where('parent_id', '=', $id)->get();
+        $folderId = $id;
 
-        session(['current_folder_id' => $id]);
-
-        return view('folders.show', compact('folder', 'folders'));
+        return view('folders.show', compact('folder', 'folders' , 'folderId'));
     }
 
     public function create()
     {
         $parentFolders = Folder::where('user_id', Auth::id())->get();
-        $currentFolderId = session('current_folder_id');
+        $currentFolderId = null;
 
         return view('folders.create', compact('parentFolders', 'currentFolderId'));
     }
@@ -52,18 +51,16 @@ class folderController extends Controller
         $request->validate([
             'name' => 'required|String|max:255',
             'description' => 'nullable|String|max:255',
-            'parent_id' => 'nullable|exists:folders,id',
+            'parent_id' => 'required',
         ]);
-
-        $currentFolderId = session('current_folder_id');
 
         Folder::create([
             'name' => $request->name,
             'description' => $request->description,
             'user_id' => Auth::id(),
-            'parent_id' => $currentFolderId ?? $request->parent_id
+            'parent_id' => $request->parent_id ?? null
         ]);
-
+        
         return redirect()->route('folders.index')->with('success', 'Folder created successfully.');
     }
 

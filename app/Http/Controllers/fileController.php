@@ -30,17 +30,25 @@ class fileController extends Controller
         return $files;
     }
 
+
     public function view($id)
     {
+        // Cari file berdasarkan ID, jika tidak ditemukan, akan melemparkan 404 error
         $file = File::findOrFail($id);
-
-        $this->authorizeAccess($file);
-        
-        $fileUrl = Storage::url($file->path);
-        
-        return view('view-file', compact('file','fileUrl'));
+    
+        // Periksa apakah user memiliki akses ke file ini
+        // $this->authorizeAccess($file);
+    
+        // Periksa apakah file ada di storage
+        if ( Storage::disk('public')->exists($file->path)) {
+            // Mengembalikan file sebagai respons untuk ditampilkan atau diunduh
+            return response()->file(Storage::disk('public')->path($file->path));
+        }
+    
+        // Jika file tidak ditemukan, kembalikan ke halaman dengan pesan error atau redirect
+        return redirect()->back()->withErrors(['File not found or no longer exists.']);
     }
-
+    
     private function authorizeAccess(File $file)
     {
         $user = DB::table('users')

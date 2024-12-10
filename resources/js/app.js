@@ -127,18 +127,6 @@ new VanillaContextMenu({
             callback: () => {
                 console.log("Buat Folder");
 
-                // document.addEventListener("DOMContentLoaded", () => {
-                //     initializeModal(
-                //         "new-folder-modal",
-                //         "close-modal",
-                //         "cancel-modal"
-                //     );
-
-                //     document.addEventListener("open-folder-modal", () =>
-                //         showModal("new-folder-modal")
-                //     );
-                // });
-
                 const modal = document.getElementById("new-folder-modal");
                 if (modal) {
                     modal.classList.remove("hidden");
@@ -165,13 +153,14 @@ new VanillaContextMenu({
             callback: () => {
                 console.log("Upload File");
 
-                const modal = document.getElementById("new-file");
+                const modal = document.getElementById("new-file-modal");
                 if (modal) {
                     modal.classList.remove("hidden");
                     modal.classList.add("flex");
                 }
 
-                const closeModalButton = document.getElementById("close-modal");
+                const closeModalButton =
+                    document.getElementById("close-file-modal");
 
                 closeModalButton.addEventListener("click", () => {
                     modal.classList.add("hidden");

@@ -32,7 +32,7 @@
                 ></textarea>
             </div>
 
-            <input type="hidden" name="parent_id" value="{{ $currentFolderId ?? null }}">
+            <input type="hidden" name="parent_id" value="{{ $folderId ?? null }}">
 
             <div class="flex justify-end mt-3">
                 <button type="button" class="bg-gray-300 text-gray-700 px-2 py-1 rounded-md mr-2" id="cancel-modal">Cancel</button>

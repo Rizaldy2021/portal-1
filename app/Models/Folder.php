@@ -18,6 +18,7 @@ class Folder extends Model
         'name',
         'description',
         'user_id',
+        'parent_id',
     ];
 
     public function children()

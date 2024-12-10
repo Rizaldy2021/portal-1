@@ -18,15 +18,16 @@ class CheckFolderAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::user();
+        $user = $request->user();
 
+        // dd($user, $user->id, $request);
         if (!$user) {
             return response()->json([
                 'message' => 'User not authenticated',
             ], 401);
         }
 
-        $folderId = $request->route('folder');
+        $folderId = $request->route('id');
 
         $folder = Folder::find($folderId);
 
