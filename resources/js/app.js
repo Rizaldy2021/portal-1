@@ -81,6 +81,44 @@ if (inputElement) {
     console.error("File input element not found");
 }
 
+function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+    } else {
+        console.error(`Modal with ID '${modalId}' not found.`);
+    }
+}
+
+function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+    } else {
+        console.error(`Modal with ID '${modalId}' not found.`);
+    }
+}
+
+function initializeModal(modalId, closeButtonId, cancelButtonId) {
+    const modal = document.getElementById(modalId);
+    const closeModalButton = document.getElementById(closeButtonId);
+    const cancelModalButton = document.getElementById(cancelButtonId);
+
+    if (closeModalButton) {
+        closeModalButton.addEventListener("click", () => hideModal(modalId));
+    } else {
+        console.error(`Close button with ID '${closeButtonId}' not found.`);
+    }
+
+    if (cancelModalButton) {
+        cancelModalButton.addEventListener("click", () => hideModal(modalId));
+    } else {
+        console.error(`Cancel button with ID '${cancelButtonId}' not found.`);
+    }
+}
+
 new VanillaContextMenu({
     scope: document.getElementById("file-explorer"),
     menuItems: [
@@ -88,17 +126,86 @@ new VanillaContextMenu({
             label: "Buat Folder",
             callback: () => {
                 console.log("Buat Folder");
-                document.dispatchEvent(new CustomEvent("open-folder-modal"));
+
+                // document.addEventListener("DOMContentLoaded", () => {
+                //     initializeModal(
+                //         "new-folder-modal",
+                //         "close-modal",
+                //         "cancel-modal"
+                //     );
+
+                //     document.addEventListener("open-folder-modal", () =>
+                //         showModal("new-folder-modal")
+                //     );
+                // });
+
+                const modal = document.getElementById("new-folder-modal");
+                if (modal) {
+                    modal.classList.remove("hidden");
+                    modal.classList.add("flex");
+                }
+
+                const closeModalButton = document.getElementById("close-modal");
+                const cancelModalButton =
+                    document.getElementById("cancel-modal");
+                if (closeModalButton && cancelModalButton) {
+                    closeModalButton.addEventListener("click", () => {
+                        modal.classList.add("hidden");
+                        modal.classList.remove("flex");
+                    });
+                    cancelModalButton.addEventListener("click", () => {
+                        modal.classList.add("hidden");
+                        modal.classList.remove("flex");
+                    });
+                }
             },
         },
         {
             label: "Upload File",
             callback: () => {
                 console.log("Upload File");
+
+                const modal = document.getElementById("new-file");
+                if (modal) {
+                    modal.classList.remove("hidden");
+                    modal.classList.add("flex");
+                }
+
+                const closeModalButton = document.getElementById("close-modal");
+
+                closeModalButton.addEventListener("click", () => {
+                    modal.classList.add("hidden");
+                    modal.classList.remove("flex");
+                });
             },
         },
     ],
     transitionDuration: 75,
     theme: "white",
     customClass: "custom-context-menu-cls",
+});
+
+folderCards = document.querySelectorAll(".folder-card");
+
+folderCards.forEach((foldercard) => {
+    new VanillaContextMenu({
+        scope: foldercard,
+        menuItems: [
+            {
+                label: "Rename Folder",
+                callback: () => {
+                    console.log("Rename Folder");
+                },
+            },
+            {
+                label: "Hapus Folder",
+                callback: () => {
+                    console.log("Hapus Folder");
+                },
+            },
+        ],
+        transitionDuration: 75,
+        theme: "white",
+        customClass: "custom-context-menu-cls",
+    });
 });

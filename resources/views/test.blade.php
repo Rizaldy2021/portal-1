@@ -18,7 +18,9 @@
         </div>
     </main>
 
+    {{ session('current_folder_id')}}
     @include ('components.modals.new-folder-modal')
+    {{-- @include ('components.modals.file-upload-modal') --}}
     {{-- <script src="/js/app.js"></script> --}}
     {{-- @include('components.context-menu') --}}
 

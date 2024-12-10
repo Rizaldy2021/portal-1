@@ -34,14 +34,17 @@ class folderController extends Controller
 
         $folders = Folder::where('parent_id', '=', $id)->get();
 
+        session(['current_folder_id' => $id]);
+
         return view('folders.show', compact('folder', 'folders'));
     }
 
     public function create()
     {
         $parentFolders = Folder::where('user_id', Auth::id())->get();
+        $currentFolderId = session('current_folder_id');
 
-        return view('folders.create', compact('parentFolders'));
+        return view('folders.create', compact('parentFolders', 'currentFolderId'));
     }
 
     public function store(Request $request)
@@ -52,11 +55,13 @@ class folderController extends Controller
             'parent_id' => 'nullable|exists:folders,id',
         ]);
 
+        $currentFolderId = session('current_folder_id');
+
         Folder::create([
             'name' => $request->name,
             'description' => $request->description,
             'user_id' => Auth::id(),
-            'parent_id' => $request->parent_id
+            'parent_id' => $currentFolderId ?? $request->parent_id
         ]);
 
         return redirect()->route('folders.index')->with('success', 'Folder created successfully.');

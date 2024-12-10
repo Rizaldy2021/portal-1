@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/files/{id}', [FileController::class, 'view'])->name('files.view');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
     Route::get('/folders/{id}', [FolderController::class, 'show'])->name('folders.show');
 });

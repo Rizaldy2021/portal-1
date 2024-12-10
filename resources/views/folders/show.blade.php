@@ -7,7 +7,7 @@
     <aside class="flex pr-2">
         <x-sidebar/>
     </aside>
-    <main class="bg-white pr-4 rounded-s-[34px] p-4 w-screen">
+    <main class="bg-white pr-4 rounded-s-[34px] p-4 w-screen" id="file-explorer">
         <h1 class="text-2xl font-medium mb-4">{{ $folder->name }}</h1>
         <div class="flex flex-col gap-10">
             <div class="parent-folder">
@@ -28,5 +28,7 @@
             </div>
         </div>
     </main>
+
+    @include ('components.modals.new-folder-modal')
 </body>
 </html>
