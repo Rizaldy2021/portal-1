@@ -49,7 +49,9 @@ Route::middleware(['auth', 'check.folder.access'])->group(function () {
 });
 
 Route::get('/admin', function () {
-    return view('admin.adminDashboard');
+    $files = app(FileController::class)->index(request());
+    $folders = app(FolderController::class)->index();
+    return view('admin.adminDashboard', compact('files', 'folders'));
 }) -> middleware(['auth', 'verified', 'role:admin'])->name('admin');
 
 Route::get('/user', function () {

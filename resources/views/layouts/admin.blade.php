@@ -16,26 +16,23 @@
     </head>
     <body class="font-sans antialiased"> 
         <div class="min-h-screen bg-gray-100 flex">
-            {{-- @include('layouts.navigation') --}}
-
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
             @endisset
-            <x-sidebar></x-sidebar>
+            
             <!-- page Sidebar -->
-            @isset($sidebar)
-                <aside class="flex pr-2">
-                    {{ $sidebar }}
-                </aside>
-            @endisset
+            
+            <aside class="flex w-auto">
+                @include('layouts.sidebar')
+            </aside>
 
             <!-- Page Content -->
-            <main>
+            <main class="flex w-full">
                 {{ $slot }}
             </main>
         </div>

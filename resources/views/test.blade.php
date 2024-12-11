@@ -1,15 +1,13 @@
 <x-app-layout>
-    <main class="bg-white pr-4 rounded-s-[34px] p-4 w-screen" id="file-explorer">
-        <h1 class="text-2xl font-medium mb-4">File Explorer</h1>
-        <div class="flex flex-col gap-10 drop-zone" id="drop-element">
+    <div class="bg-white rounded-s-[34px] p-4 h-full flex flex-wrap" id="file-explorer">
+        <div class="flex flex-col gap-4 drop-zone" id="drop-element">
+            <h1 class="text-2xl font-medium">File Explorer</h1>
             @include('files.index')
             @include('folders.index')
         </div>
-    </main>
+    </div>
     
     @include ('components.modals.new-folder-modal')
     @include ('components.modals.file-upload-modal')
-    {{-- <script src="/js/app.js"></script> --}}
-    {{-- @include('components.context-menu') --}}
     
 </x-app-layout>
