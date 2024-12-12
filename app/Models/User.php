@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -49,6 +51,15 @@ class User extends Authenticatable
 
     public function getUserRoles()
     {
-        return $this->getRoleNames(); // Returns a collection of role names
+        return $this->getRoleNames();
+    }
+
+    public function haveRole()
+    {
+        return DB::table('users')
+            ->leftjoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->leftjoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->select('users.*', 'roles.name as role')
+            ->where('users.id', Auth::user()->id)->first();
     }
 }

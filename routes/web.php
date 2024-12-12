@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FolderController;
-
+use App\Http\Controllers\Auth\AddUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,8 +54,10 @@ Route::get('/admin', function () {
     return view('admin.adminDashboard', compact('files', 'folders'));
 }) -> middleware(['auth', 'verified', 'role:admin'])->name('admin');
 
-Route::get('/user', function () {
-    return view('user.userDashboard');
+Route::get('/user/{name}', function () {
+    $files = app(FileController::class)->index(request());
+    $folders = app(FolderController::class)->index();
+    return view('user.userDashboard', compact('files', 'folders'));
 }) -> middleware(['auth', 'verified', 'role:user'])->name('user');
 
 require __DIR__.'/auth.php';

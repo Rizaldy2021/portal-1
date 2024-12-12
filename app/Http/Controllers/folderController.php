@@ -61,7 +61,10 @@ class folderController extends Controller
             'parent_id' => $request->parent_id ?? null
         ]);
         
-        return redirect()->route('folders.index')->with('success', 'Folder created successfully.');
+        // return redirect()->route('folders.index')->with('success', 'Folder created successfully.');
+        return redirect()
+        ->back()
+        ->with('success', 'Folder created successfully.');
     }
 
     public function edit(Folder $folder)

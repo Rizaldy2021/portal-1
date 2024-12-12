@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="h-screen bg-gray-100 flex flex-col">
             @include('layouts.navigation')
 
             @isset($header)
@@ -26,7 +26,7 @@
                 </header>
             @endisset
 
-            <main class="flex justify-items-center">
+            <main class="flex h-screen">
                 {{ $slot }}
             </main>
         </div>

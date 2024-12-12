@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    @include('includes.head')
-</head>
-<body class="flex bg-[#f4f3f3] font-[poppins] px-[16px]">
-    <aside class="flex pr-2">
-        <x-sidebar/>
-    </aside>
-    <main class="bg-white w-full p-4 rounded-s-[40px]">
-        <h1 class="text-2xl font-bold mb-4">Home</h1>
-    </main>
-</body>
-</html>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('File Explorer') }}
+        </h2>
+    </x-slot>
+    <div class="bg-white w-full p-4 h-full">
+        @include('files.index')
+    </div>
+</x-app-layout>

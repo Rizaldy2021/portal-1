@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
         }
             
         if (in_array('user', $request->user()->getUserRoles()->toArray())) {
-            return redirect('/user');
+            return redirect('/user/'.$request->user()->id);
         }
     
 

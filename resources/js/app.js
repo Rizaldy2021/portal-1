@@ -81,44 +81,6 @@ if (inputElement) {
     console.error("File input element not found");
 }
 
-function showModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-    } else {
-        console.error(`Modal with ID '${modalId}' not found.`);
-    }
-}
-
-function hideModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.add("hidden");
-        modal.classList.remove("flex");
-    } else {
-        console.error(`Modal with ID '${modalId}' not found.`);
-    }
-}
-
-function initializeModal(modalId, closeButtonId, cancelButtonId) {
-    const modal = document.getElementById(modalId);
-    const closeModalButton = document.getElementById(closeButtonId);
-    const cancelModalButton = document.getElementById(cancelButtonId);
-
-    if (closeModalButton) {
-        closeModalButton.addEventListener("click", () => hideModal(modalId));
-    } else {
-        console.error(`Close button with ID '${closeButtonId}' not found.`);
-    }
-
-    if (cancelModalButton) {
-        cancelModalButton.addEventListener("click", () => hideModal(modalId));
-    } else {
-        console.error(`Cancel button with ID '${cancelButtonId}' not found.`);
-    }
-}
-
 new VanillaContextMenu({
     scope: document.getElementById("file-explorer"),
     menuItems: [
@@ -127,25 +89,11 @@ new VanillaContextMenu({
             callback: () => {
                 console.log("Buat Folder");
 
-                const modal = document.getElementById("new-folder-modal");
-                if (modal) {
-                    modal.classList.remove("hidden");
-                    modal.classList.add("flex");
-                }
-
-                const closeModalButton = document.getElementById("close-modal");
-                const cancelModalButton =
-                    document.getElementById("cancel-modal");
-                if (closeModalButton && cancelModalButton) {
-                    closeModalButton.addEventListener("click", () => {
-                        modal.classList.add("hidden");
-                        modal.classList.remove("flex");
-                    });
-                    cancelModalButton.addEventListener("click", () => {
-                        modal.classList.add("hidden");
-                        modal.classList.remove("flex");
-                    });
-                }
+                window.dispatchEvent(
+                    new CustomEvent("open-modal", {
+                        detail: "new-folder-modal",
+                    })
+                );
             },
         },
         {
@@ -153,19 +101,11 @@ new VanillaContextMenu({
             callback: () => {
                 console.log("Upload File");
 
-                const modal = document.getElementById("new-file-modal");
-                if (modal) {
-                    modal.classList.remove("hidden");
-                    modal.classList.add("flex");
-                }
-
-                const closeModalButton =
-                    document.getElementById("close-file-modal");
-
-                closeModalButton.addEventListener("click", () => {
-                    modal.classList.add("hidden");
-                    modal.classList.remove("flex");
-                });
+                window.dispatchEvent(
+                    new CustomEvent("open-modal", {
+                        detail: "file-upload-modal",
+                    })
+                );
             },
         },
     ],
@@ -174,7 +114,7 @@ new VanillaContextMenu({
     customClass: "custom-context-menu-cls",
 });
 
-folderCards = document.querySelectorAll(".folder-card");
+const folderCards = document.querySelectorAll(".folder-card");
 
 folderCards.forEach((foldercard) => {
     new VanillaContextMenu({
@@ -197,4 +137,26 @@ folderCards.forEach((foldercard) => {
         theme: "white",
         customClass: "custom-context-menu-cls",
     });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const openButton = document.getElementById("open-modal");
+    const modal = document.getElementById("add-user-modal");
+    const closeButton = document.getElementById("close-add-modal");
+
+    // Open the modal
+    if (openButton && modal) {
+        openButton.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        });
+    }
+
+    // Close the modal
+    if (closeButton && modal) {
+        closeButton.addEventListener("click", () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        });
+    }
 });
