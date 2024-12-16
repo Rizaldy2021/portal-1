@@ -18,11 +18,8 @@
     </head>
     <body class="font-sans antialiased h-full"> 
         <div class="min-h-screen bg-gray-100 flex flex-row">
-            <div>
-                <aside class="flex w-auto">
-                    @include('layouts.sidebar')
-                </aside>
-            </div>
+            @props(['folders'])
+            @include('layouts.sidebar', ['folders' => $folders ?? collect()])
 
             <div>
                 @include('layouts.navigation')
@@ -37,14 +34,13 @@
                 <!-- page Sidebar -->
 
                 <!-- Page Content -->
-                <main class="flex w-full h-full">
-                    {{ $slot }}
+                <main class="flex w-full h-fit">
+                    {{-- {{ $slot }} --}}
+                    @yield('content')
                 </main>
             </div>
         </div>
 
-        @include ('components.modals.new-folder-modal')
-        @include ('components.modals.file-upload-modal')
         @include('components.modals.add-user-modal')
 
     </body>

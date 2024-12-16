@@ -17,6 +17,18 @@
             </x-sidebar-link>
         </div>
     </div>
+
+    <div>
+        <h4 class="text-lg font-medium text-gray-600">Users</h4>
+
+        @foreach ($folders as $folder)
+            <x-sidebar-link :href="route('folders.show', $folder->id)" :active="request()->routeIs('folders.show', $folder->id)">
+                <img src="{{ asset('icon/folder.svg') }}" alt="folder-icon">
+                {{ $folder->name }}
+            </x-sidebar-link>
+        @endforeach
+
+    </div>
     <button 
     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
     x-on:click="$dispatch('open-modal', 'add-user-modal')"

@@ -6,6 +6,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\Auth\AddUserController;
+use App\Http\Controllers\LayoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +30,8 @@ Route::post('/upload', [FileUploadController::class, 'upload'])->name('files.upl
 
 Route::post('/folders', [FolderController::class, 'store'])->name('folders.store');
 
+Route::put('rename', [FolderController::class, 'update'])->name('folders.update');
+
 Route::middleware('auth')->group(function () {
     Route::get('/files', [FileController::class, 'index'])->name('files.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,13 +54,17 @@ Route::middleware(['auth', 'check.folder.access'])->group(function () {
 Route::get('/admin', function () {
     $files = app(FileController::class)->index(request());
     $folders = app(FolderController::class)->index();
-    return view('admin.adminDashboard', compact('files', 'folders'));
+    $layout = app(LayoutController::class)->getLayout();
+
+    return view('admin.adminDashboard', compact('files', 'folders', 'layout'));
 }) -> middleware(['auth', 'verified', 'role:admin'])->name('admin');
 
 Route::get('/user/{name}', function () {
     $files = app(FileController::class)->index(request());
     $folders = app(FolderController::class)->index();
-    return view('user.userDashboard', compact('files', 'folders'));
+    $layout = app(LayoutController::class)->getLayout();
+
+    return view('user.userDashboard', compact('files', 'folders', 'layout'));
 }) -> middleware(['auth', 'verified', 'role:user'])->name('user');
 
 require __DIR__.'/auth.php';

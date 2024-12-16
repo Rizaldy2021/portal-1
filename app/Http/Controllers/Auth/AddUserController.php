@@ -34,6 +34,12 @@ class AddUserController extends Controller
 
         $user->assignRole('user');
 
+        \App\Models\Folder::create([
+            'name' => $user->name,
+            'parent_id' => null,
+            'user_id' => $user->id,
+        ]);
+
         return redirect()->back()->with('success','User created successfully.');
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Folder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Http\Controllers\LayoutController;
 
 class folderController extends Controller
 {
@@ -35,7 +37,10 @@ class folderController extends Controller
         $folders = Folder::where('parent_id', '=', $id)->get();
         $folderId = $id;
 
-        return view('folders.show', compact('folder', 'folders' , 'folderId'));
+        $layoutController = new LayoutController();
+        $layout = $layoutController->getLayout();
+        // dd($layout);
+        return view('folders.show', compact('folder', 'folders' , 'folderId', 'layout'));
     }
 
     public function create()

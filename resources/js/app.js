@@ -124,6 +124,12 @@ folderCards.forEach((foldercard) => {
                 label: "Rename Folder",
                 callback: () => {
                     console.log("Rename Folder");
+
+                    window.dispatchEvent(
+                        new CustomEvent("open-modal", {
+                            detail: "rename-folder-modal",
+                        })
+                    );
                 },
             },
             {
