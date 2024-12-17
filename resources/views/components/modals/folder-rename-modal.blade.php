@@ -23,7 +23,7 @@
 <x-modal name="rename-folder-modal" :show="false" maxWidth="lg" focusable>
     <div class="p-6">
         <h2 class="text-lg font-medium text-gray-900 mb-4">Rename Folder</h2>
-        <form action="{{-- route('folders.update', $folder) --}}#" method="POST">
+        <form action="#" method="POST">
             @csrf
             @method('PUT')
 

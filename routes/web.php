@@ -15,7 +15,9 @@ Route::get('/', function () {
 Route::get('/view', function () {
     $files = app(FileController::class)->index(request());
     $folders = app(FolderController::class)->index();
-    return view('test', compact('files', 'folders'));
+    $layout = app(LayoutController::class)->getLayout();
+
+    return view('test', compact('files', 'folders', 'layout'));
 })->name('view');
 
 Route::get('/coba', function () {
