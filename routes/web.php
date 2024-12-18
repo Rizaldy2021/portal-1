@@ -57,8 +57,9 @@ Route::get('/admin', function () {
     $files = app(FileController::class)->index(request());
     $folders = app(FolderController::class)->index();
     $layout = app(LayoutController::class)->getLayout();
+    $topLevelFolders = app(FolderController::class)->index();
 
-    return view('admin.adminDashboard', compact('files', 'folders', 'layout'));
+    return view('admin.adminDashboard', compact('files', 'folders', 'layout', 'topLevelFolders'));
 }) -> middleware(['auth', 'verified', 'role:admin'])->name('admin');
 
 Route::get('/user/{name}', function () {

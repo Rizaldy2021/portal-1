@@ -4,3 +4,5 @@
         <span class="truncate" title="{{ $folder->name }}">{{ $slot }}</span>
     </a>
 </div>
+
+{{-- @include('components.modals.folder-rename-modal') --}}

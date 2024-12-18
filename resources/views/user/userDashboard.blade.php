@@ -11,13 +11,12 @@
             @include('files.index')
             @include('folders.index')
         </div>
-        {{-- @dd(route('folders.update', $folders)); --}}
+        @dd(route('folders.update', $folders));
         {{-- @dd($folders); --}}
 
     </div>
 
     @include('components.modals.file-upload-modal')
     @include('components.modals.new-folder-modal')
-    @include('components.modals.folder-rename-modal')
 
 @endsection

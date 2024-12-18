@@ -31,7 +31,5 @@
                 @yield('content')
             </main>
         </div>
-
-        {{-- @include('folders.show', ['layout' => 'app-layout', 'folders' => $folders, 'folder' => $folder]) --}}
     </body>
 </html>

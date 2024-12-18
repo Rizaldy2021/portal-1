@@ -17,6 +17,7 @@ class folderController extends Controller
 
         if ($user->role == 'admin') {
             $folders = Folder::with(['children','files'])->whereNull('parent_id')->get();
+            $topLevelFolders = Folder::whereNull('parent_id')->get();
         } else {
             $folders = Folder::with(['children','files'])
                 ->whereNull('parent_id')
@@ -25,6 +26,7 @@ class folderController extends Controller
         }
 
         // return view('folders.index', compact('folders'));
+        // return [$folders, $topLevelFolders];
         return $folders;
     }
 
@@ -85,18 +87,18 @@ class folderController extends Controller
 
     public function update(Request $request, Folder $folder)
     {
-        $this->authorizeAccess($folder);
+        // $this->authorizeAccess($folder);
 
         $request->validate([
             'name' => 'required|String|max:255',
             'description' => 'nullable|String|max:255',
             'parent_id' => 'nullable|exists:folders,id',
         ]);
-
+        
         $folder->update([
             'name' => $request->name,
             'description' => $request->description,
-            'parent_id' => $request->parent_id
+            'parent_id' => $request->parent_id,
         ]);
 
         return redirect()->route('folders.index')->with('success', 'Folder updated successfully.');
@@ -114,7 +116,7 @@ class folderController extends Controller
     {
         $user = Auth::user();
         $userRole = $this->hasRole();
-        if ($folder->user_id != Auth::id() && $userRole->role != 'admin') {
+        if ($folder->user_id != $user->id && $userRole->role != 'admin') {
             abort(403, 'Unauthorized');
         }
     }

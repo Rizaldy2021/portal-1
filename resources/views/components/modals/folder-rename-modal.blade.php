@@ -23,7 +23,7 @@
 <x-modal name="rename-folder-modal" :show="false" maxWidth="lg" focusable>
     <div class="p-6">
         <h2 class="text-lg font-medium text-gray-900 mb-4">Rename Folder</h2>
-        <form action="#" method="POST">
+        <form action="{{ route('folders.update', $folder) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -33,6 +33,8 @@
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
+            <input type="hidden" name="parent_id" value="{{ $folderId ?? null }}">
+            
             <div class="mt-4 flex justify-end gap-4">
                 <x-primary-button>
                     {{ __('Rename') }}
