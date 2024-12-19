@@ -33,6 +33,8 @@ class CheckFolderAccess
 
         $userRole = $this->hasRole();
 
+        // dd($folder);
+
         if ($folder->user_id != $user->id && $userRole->role != 'admin') {
             return response()->json([
                 'message' => 'Forbidden',

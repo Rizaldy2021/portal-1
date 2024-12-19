@@ -18,23 +18,23 @@
     </head>
     <body class="font-sans antialiased h-full"> 
         <div class="min-h-screen bg-gray-100 flex flex-row">
-            @props(['folders'])
-            @include('layouts.sidebar', ['folders' => $folders ?? collect()])
+            {{-- @props(['folders'])
+            @include('components.sidebar', ['folders' => $folders ?? collect()]) --}}
+
+            @include('components.sidebar')
 
             <div>
                 <!-- Page Heading -->
                 @hasSection('header')
                     <header class="bg-white shadow">
                         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                            {{-- {{ $header }} --}}
                             @yield('header')
                         </div>
                     </header>
-                 @endif
+                @endif
 
                 <!-- Page Content -->
                 <main class="flex w-full h-fit">
-                    {{-- {{ $slot }} --}}
                     @yield('content')
                 </main>
             </div>

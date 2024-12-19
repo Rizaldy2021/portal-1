@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Folder;
 
 class AddUserController extends Controller
 {
@@ -41,5 +42,15 @@ class AddUserController extends Controller
         ]);
 
         return redirect()->back()->with('success','User created successfully.');
+    }
+
+    public function index()
+    {
+        $users = User::all();
+        $topLevelFolders = Folder::where('parent_id','=',0)->get();
+
+        $result = ['users'=>$users, 'topLevelFolders'=>$topLevelFolders];
+
+        return view('admin.users.index', compact('result'));
     }
 }

@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/admin/users', [AddUserController::class, 'index'])->name('admin.users.index');
+
 Route::get('/files', [FileController::class, 'index'])->name('files.index');
 Route::middleware('auth', 'check.file.acceess')->group(function () {
     Route::get('/files/{id}', [FileController::class, 'view'])->name('files.view');
@@ -55,11 +57,11 @@ Route::middleware(['auth', 'check.folder.access'])->group(function () {
 
 Route::get('/admin', function () {
     $files = app(FileController::class)->index(request());
-    $folders = app(FolderController::class)->index();
+    $result = app(FolderController::class)->index();
     $layout = app(LayoutController::class)->getLayout();
     $topLevelFolders = app(FolderController::class)->index();
 
-    return view('admin.adminDashboard', compact('files', 'folders', 'layout', 'topLevelFolders'));
+    return view('admin.adminDashboard', compact('files', 'result', 'layout'));
 }) -> middleware(['auth', 'verified', 'role:admin'])->name('admin');
 
 Route::get('/user/{name}', function () {

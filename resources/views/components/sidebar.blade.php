@@ -1,42 +1,3 @@
-{{-- <div x-data="{ open: false }" class="bg-[#f4f3f3] text-black h-full min-h-screen px-2 py-4 flex flex-col gap-2">
-    <div class="flex w-full mb-4 items-start flex-col">
-        <img src="{{ asset('img/logo.svg') }}" alt="logo" class="w-[35px]">
-        <h3 class="font-bold text-xl mr-3">Dashboard</h3>
-    </div>
-    <div class="flex w-full">
-        <div class="w-full flex flex-col gap-1">
-            <h4 class="text-lg font-medium text-gray-600">General</h4>
-            <x-sidebar-link :href="route('admin')" :active="request()->routeIs('admin')">
-                <img src="{{ asset('icon/home.svg')}}" alt="nav-icon">
-                {{__('Home')}}
-            </x-sidebar-link>
-
-            <x-sidebar-link :href="route('view')" :active="request()->routeIs('view')">
-                <img src="{{ asset('icon/home.svg')}}" alt="nav-icon">
-                {{__('viewewewewe')}}
-            </x-sidebar-link>
-        </div>
-    </div>
-
-    <div>
-        <h4 class="text-lg font-medium text-gray-600">Users</h4>
-
-        @foreach ($folders as $folder)
-            <x-sidebar-link :href="route('folders.show', $folder->id)" :active="request()->routeIs('folders.show', $folder->id)">
-                <img src="{{ asset('icon/folder.svg') }}" alt="folder-icon">
-                {{ $folder->name }}
-            </x-sidebar-link>
-        @endforeach
-
-    </div>
-    <button 
-    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-    x-on:click="$dispatch('open-modal', 'add-user-modal')"
-    >
-        Add User
-    </button>
-</div> --}}
-
 <div x-data="{ showSidebar: false }" class="relative flex w-auto flex-col md:flex-row">
     <!-- This allows screen readers to skip the sidebar and go directly to the main content. -->
     <a class="sr-only" href="#main-content">skip to the main content</a>
@@ -74,7 +35,7 @@
                 {{__('Home')}}
             </x-sidebar-link>
             
-            <x-sidebar-link :href="route('admin.users.index')" :active="request()->routeIs('view')">
+            <x-sidebar-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                     <path d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM1.49 15.326a.78.78 0 0 1-.358-.442 3 3 0 0 1 4.308-3.516 6.484 6.484 0 0 0-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 0 1-2.07-.655ZM16.44 15.98a4.97 4.97 0 0 0 2.07-.654.78.78 0 0 0 .357-.442 3 3 0 0 0-4.308-3.517 6.484 6.484 0 0 1 1.907 3.96 2.32 2.32 0 0 1-.026.654ZM18 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM5.304 16.19a.844.844 0 0 1-.277-.71 5 5 0 0 1 9.947 0 .843.843 0 0 1-.277.71A6.975 6.975 0 0 1 10 18a6.974 6.974 0 0 1-4.696-1.81Z" />
                 </svg>                                    
@@ -83,19 +44,32 @@
             
             <h2 class="text-neutral-600 dark:text-neutral-300">User</h2>
 
-            {{-- @foreach ($result['topLevelFolders'] as $folder)
-                <x-sidebar-link :href="route('folders.show', $folder->id)" :active="request()->routeIs('folders.show', $folder->id)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                        <path d="M3.75 3A1.75 1.75 0 0 0 2 4.75v3.26a3.235 3.235 0 0 1 1.75-.51h12.5c.644 0 1.245.188 1.75.51V6.75A1.75 1.75 0 0 0 16.25 5h-4.836a.25.25 0 0 1-.177-.073L9.823 3.513A1.75 1.75 0 0 0 8.586 3H3.75ZM3.75 9A1.75 1.75 0 0 0 2 10.75v4.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0 0 18 15.25v-4.5A1.75 1.75 0 0 0 16.25 9H3.75Z" />
+            <div x-data="{ isExpanded: false }" class="flex flex-col">
+                <button type="button" x-on:click="isExpanded = ! isExpanded" id="products-btn" aria-controls="products" x-bind:aria-expanded="isExpanded ? 'true' : 'false'" class="flex items-center justify-between rounded-md gap-2 px-2 py-1.5 text-sm font-medium underline-offset-2 focus:outline-none focus-visible:underline" x-bind:class="isExpanded ? 'text-neutral-900 bg-black/10 dark:text-white dark:bg-white/10' :  'text-neutral-600 hover:bg-black/5 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white dark:hover:bg-white/5'">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" aria-hidden="true">
+                        <path d="M10.362 1.093a.75.75 0 0 0-.724 0L2.523 5.018 10 9.143l7.477-4.125-7.115-3.925ZM18 6.443l-7.25 4v8.25l6.862-3.786A.75.75 0 0 0 18 14.25V6.443ZM9.25 18.693v-8.25l-7.25-4v7.807a.75.75 0 0 0 .388.657l6.862 3.786Z"/>
                     </svg>
-                    {{ $folder->name }}
-                </x-sidebar-link>
-            @endforeach --}}
+                    <span class="mr-auto text-left">Products</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 transition-transform rotate-0 shrink-0" x-bind:class="isExpanded ? 'rotate-180' : 'rotate-0'" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+
+                <ul x-cloak x-collapse x-show="isExpanded" aria-labelledby="products-btn" id="products">
+                    <li class="px-1 py-0.5 first:mt-2">
+                        <a href="#" class="flex items-center rounded-md gap-2 px-2 py-1.5 text-sm text-neutral-600 underline-offset-2 hover:bg-black/5 hover:text-neutral-900 focus:outline-none focus-visible:underline dark:text-neutral-300 dark:hover:bg-white/5 dark:hover:text-white">All Products</a>
+                    </li>
+                    <li class="px-1 py-0.5 first:mt-2">
+                        <a href="#" class="flex items-center rounded-md gap-2 px-2 py-1.5 text-sm text-neutral-600 underline-offset-2 hover:bg-black/5 hover:text-neutral-900 focus:outline-none focus-visible:underline dark:text-neutral-300 dark:hover:bg-white/5 dark:hover:text-white">Inventory</a>
+                    </li>
+                    <li class="px-1 py-0.5 first:mt-2">
+                        <a href="#" class="flex items-center rounded-md gap-2 px-2 py-1.5 text-sm text-neutral-600 underline-offset-2 hover:bg-black/5 hover:text-neutral-900 focus:outline-none focus-visible:underline dark:text-neutral-300 dark:hover:bg-white/5 dark:hover:text-white">Reviews</a>
+                    </li>
+                </ul>
+            </div>
 
             @foreach ($result['topLevelFolders'] as $folder)
-                <x-sidebar-link 
-                    :href="route('folders.show', $folder->id)" 
-                    :active="request()->routeIs('folders.show', $folder->id)">
+                <x-sidebar-link :href="route('folders.show', $folder->id)" :active="request()->routeIs('folders.show', $folder->id)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                         <path d="M3.75 3A1.75 1.75 0 0 0 2 4.75v3.26a3.235 3.235 0 0 1 1.75-.51h12.5c.644 0 1.245.188 1.75.51V6.75A1.75 1.75 0 0 0 16.25 5h-4.836a.25.25 0 0 1-.177-.073L9.823 3.513A1.75 1.75 0 0 0 8.586 3H3.75ZM3.75 9A1.75 1.75 0 0 0 2 10.75v4.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0 0 18 15.25v-4.5A1.75 1.75 0 0 0 16.25 9H3.75Z" />
                     </svg>

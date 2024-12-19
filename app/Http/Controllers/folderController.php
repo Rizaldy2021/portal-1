@@ -15,9 +15,11 @@ class folderController extends Controller
     {
         $user = $this->hasRole();
 
+        $result = ['folders' =>[], 'topLevelFolders' => []];
+
         if ($user->role == 'admin') {
-            $folders = Folder::with(['children','files'])->whereNull('parent_id')->get();
-            $topLevelFolders = Folder::whereNull('parent_id')->get();
+            $result['folders'] = Folder::with(['children','files'])->whereNull('parent_id')->get();
+            $result['topLevelFolders'] = Folder::whereNull('parent_id')->get();
         } else {
             $folders = Folder::with(['children','files'])
                 ->whereNull('parent_id')
@@ -27,7 +29,7 @@ class folderController extends Controller
 
         // return view('folders.index', compact('folders'));
         // return [$folders, $topLevelFolders];
-        return $folders;
+        return $result;
     }
 
     public function show($id)
@@ -41,8 +43,8 @@ class folderController extends Controller
 
         $layoutController = new LayoutController();
         $layout = $layoutController->getLayout();
-        // dd($layout);
-        return view('folders.show', compact('folder', 'folders' , 'folderId', 'layout'));
+        $result['topLevelFolders'] = Folder::whereNull('parent_id')->get();
+        return view('folders.show', compact('folder', 'folders' , 'folderId', 'layout', 'result'));
     }
 
     public function create()
