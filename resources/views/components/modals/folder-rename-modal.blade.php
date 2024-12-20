@@ -20,26 +20,30 @@
     </div>
 </x-modal> --}}
 
+{{-- @foreach ($result['folders'] as $folder)     --}}
 <x-modal name="rename-folder-modal" :show="false" maxWidth="lg" focusable>
     <div class="p-6">
         <h2 class="text-lg font-medium text-gray-900 mb-4">Rename Folder</h2>
-        <form action="{{ route('folders.update', $folder) }}" method="POST">
+        <form method="POST" id="rename-folder-form">
             @csrf
             @method('PUT')
-
+            
             <div class="mt-4">
                 <x-input-label for="folder-name" :value="__('Folder Name')" />
                 <x-text-input id="folder-name" class="block mt-1 w-full" type="text" name="name" required autofocus />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
-            </div>
-
-            <input type="hidden" name="parent_id" value="{{ $folderId ?? null }}">
-            
-            <div class="mt-4 flex justify-end gap-4">
-                <x-primary-button>
-                    {{ __('Rename') }}
-                </x-primary-button>
-            </div>
-        </form>
-    </div>
-</x-modal>
+                </div>
+                
+                <input type="hidden" id="folder-id" name="folder_id">
+                
+                {{-- <input type="hidden" name="parent_id" value="{{ $folderId ?? null }}"> --}}
+                
+                <div class="mt-4 flex justify-end gap-4">
+                    <x-primary-button>
+                        {{ __('Rename') }}
+                    </x-primary-button>
+                </div>
+            </form>
+        </div>
+    </x-modal>
+{{-- @endforeach --}}

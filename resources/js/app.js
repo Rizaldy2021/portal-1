@@ -116,14 +116,31 @@ new VanillaContextMenu({
 
 const folderCards = document.querySelectorAll(".folder-card");
 
-folderCards.forEach((foldercard) => {
+folderCards.forEach((folderCard) => {
     new VanillaContextMenu({
-        scope: foldercard,
+        scope: folderCard,
         menuItems: [
             {
                 label: "Rename Folder",
                 callback: () => {
                     console.log("Rename Folder");
+
+                    const folderId = folderCard.getAttribute("data-folder-id");
+                    const folderName =
+                        folderCard.getAttribute("data-folder-name");
+                    const updateUrlTemplate =
+                        folderCard.getAttribute("data-update-url");
+                    const updateUrl = updateUrlTemplate.replace(
+                        ":folder_id",
+                        folderId
+                    );
+
+                    console.log({ folderId, folderName, updateUrl });
+
+                    const form = document.getElementById("rename-folder-form");
+                    form.action = updateUrl;
+                    document.getElementById("folder-id").value = folderId;
+                    document.getElementById("folder-name").value = folderName;
 
                     window.dispatchEvent(
                         new CustomEvent("open-modal", {

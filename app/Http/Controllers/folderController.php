@@ -87,23 +87,42 @@ class folderController extends Controller
         return view('folders.edit', compact('folder', 'parentFolders'));
     }
 
-    public function update(Request $request, Folder $folder)
-    {
-        // $this->authorizeAccess($folder);
+    // public function update(Request $request, Folder $folder)
+    // {
+    //     // $this->authorizeAccess($folder);
 
-        $request->validate([
-            'name' => 'required|String|max:255',
-            'description' => 'nullable|String|max:255',
-            'parent_id' => 'nullable|exists:folders,id',
-        ]);
+    //     $request->validate([
+    //         'name' => 'required|String|max:255',
+    //         'description' => 'nullable|String|max:255',
+    //         'parent_id' => 'nullable|exists:folders,id',
+    //     ]);
         
+    //     $folder->update([
+    //         'name' => $request->name,
+    //         'description' => $request->description,
+    //         'parent_id' => $request->parent_id,
+    //     ]);
+
+    //     return redirect()->route('folders.index')->with('success', 'Folder updated successfully.');
+    // }
+
+    
+    public function update(Request $request, $folder_id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $folder = Folder::findOrFail($folder_id);
+
         $folder->update([
             'name' => $request->name,
-            'description' => $request->description,
-            'parent_id' => $request->parent_id,
         ]);
 
-        return redirect()->route('folders.index')->with('success', 'Folder updated successfully.');
+        // return redirect()->route('folders.index')->with('success', 'Folder updated successfully.');
+        return redirect()
+        ->back()
+        ->with('success', 'Folder renamed successfully.');
     }
 
     public function destroy(Folder $folder)

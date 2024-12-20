@@ -32,7 +32,7 @@ Route::post('/upload', [FileUploadController::class, 'upload'])->name('files.upl
 
 Route::post('/folders', [FolderController::class, 'store'])->name('folders.store');
 
-Route::put('rename', [FolderController::class, 'update'])->name('folders.update');
+Route::put('/folders/{folder_id}', [FolderController::class, 'update'])->name('folders.update');
 
 Route::middleware('auth')->group(function () {
     Route::get('/files', [FileController::class, 'index'])->name('files.index');

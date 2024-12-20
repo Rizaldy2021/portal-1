@@ -25,7 +25,7 @@
 
     @include ('components.modals.new-folder-modal')
     @include ('components.modals.file-upload-modal')
-    @include('components.modals.folder-rename-modal')
+    {{-- @include('components.modals.folder-rename-modal') --}}
 @endsection
 
 {{-- @props(['layout' => 'app-layout'])
