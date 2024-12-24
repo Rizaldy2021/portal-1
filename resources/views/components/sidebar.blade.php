@@ -44,7 +44,7 @@
             
             <h2 class="text-neutral-600 dark:text-neutral-300">User</h2>
 
-            <div x-data="{ isExpanded: false }" class="flex flex-col">
+            {{-- <div x-data="{ isExpanded: false }" class="flex flex-col">
                 <button type="button" x-on:click="isExpanded = ! isExpanded" id="products-btn" aria-controls="products" x-bind:aria-expanded="isExpanded ? 'true' : 'false'" class="flex items-center justify-between rounded-md gap-2 px-2 py-1.5 text-sm font-medium underline-offset-2 focus:outline-none focus-visible:underline" x-bind:class="isExpanded ? 'text-neutral-900 bg-black/10 dark:text-white dark:bg-white/10' :  'text-neutral-600 hover:bg-black/5 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white dark:hover:bg-white/5'">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" aria-hidden="true">
                         <path d="M10.362 1.093a.75.75 0 0 0-.724 0L2.523 5.018 10 9.143l7.477-4.125-7.115-3.925ZM18 6.443l-7.25 4v8.25l6.862-3.786A.75.75 0 0 0 18 14.25V6.443ZM9.25 18.693v-8.25l-7.25-4v7.807a.75.75 0 0 0 .388.657l6.862 3.786Z"/>
@@ -66,7 +66,7 @@
                         <a href="#" class="flex items-center rounded-md gap-2 px-2 py-1.5 text-sm text-neutral-600 underline-offset-2 hover:bg-black/5 hover:text-neutral-900 focus:outline-none focus-visible:underline dark:text-neutral-300 dark:hover:bg-white/5 dark:hover:text-white">Reviews</a>
                     </li>
                 </ul>
-            </div>
+            </div> --}}
 
             @foreach ($result['topLevelFolders'] as $folder)
                 <x-sidebar-link :href="route('folders.show', $folder->id)" :active="request()->routeIs('folders.show', $folder->id)">
@@ -84,7 +84,7 @@
                     Add User
             </button>
             
-            <a href="#" class="flex items-center rounded-md gap-2 bg-black/10 px-2 py-1.5 text-sm font-medium text-neutral-900 underline-offset-2 focus-visible:underline focus:outline-none dark:bg-white/10 dark:text-white">
+            {{-- <a href="#" class="flex items-center rounded-md gap-2 bg-black/10 px-2 py-1.5 text-sm font-medium text-neutral-900 underline-offset-2 focus-visible:underline focus:outline-none dark:bg-white/10 dark:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" aria-hidden="true">
                     <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z"/>
                 </svg>
@@ -111,13 +111,12 @@
                     <path fill-rule="evenodd" d="M7.84 1.804A1 1 0 0 1 8.82 1h2.36a1 1 0 0 1 .98.804l.331 1.652a6.993 6.993 0 0 1 1.929 1.115l1.598-.54a1 1 0 0 1 1.186.447l1.18 2.044a1 1 0 0 1-.205 1.251l-1.267 1.113a7.047 7.047 0 0 1 0 2.228l1.267 1.113a1 1 0 0 1 .206 1.25l-1.18 2.045a1 1 0 0 1-1.187.447l-1.598-.54a6.993 6.993 0 0 1-1.929 1.115l-.33 1.652a1 1 0 0 1-.98.804H8.82a1 1 0 0 1-.98-.804l-.331-1.652a6.993 6.993 0 0 1-1.929-1.115l-1.598.54a1 1 0 0 1-1.186-.447l-1.18-2.044a1 1 0 0 1 .205-1.251l1.267-1.114a7.05 7.05 0 0 1 0-2.227L1.821 7.773a1 1 0 0 1-.206-1.25l1.18-2.045a1 1 0 0 1 1.187-.447l1.598.54A6.992 6.992 0 0 1 7.51 3.456l.33-1.652ZM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"/>
                 </svg>
                 <span>Settings</span>
-            </a>
+            </a> --}}
         </div>
 
         <!-- Profile Menu  -->
         <div x-data="{ menuIsOpen: false }" class="mt-auto" x-on:keydown.esc.window="menuIsOpen = false">
             <button type="button" class="flex w-full cursor-pointer items-center rounded-md gap-2 p-2 text-left text-neutral-600 hover:bg-black/5 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black dark:text-neutral-300 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:outline-white" x-bind:class="menuIsOpen ? 'bg-black/10 dark:bg-white/10' : ''" aria-haspopup="true" x-on:click="menuIsOpen = ! menuIsOpen" x-bind:aria-expanded="menuIsOpen">
-                {{-- <img src="https://penguinui.s3.amazonaws.com/component-assets/avatar-7.webp" class="size-8 object-cover rounded-md" alt="avatar" aria-hidden="true"/> --}}
                 <div class="flex flex-col">
                     <span class="text-sm font-bold text-neutral-900 dark:text-white">{{Auth::user()->name}}</span>
                     <span class="w-32 overflow-hidden text-ellipsis text-xs md:w-36" aria-hidden="true">{{Auth::user()->email}}</span>

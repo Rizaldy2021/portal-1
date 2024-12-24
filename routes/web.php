@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FolderController;
-use App\Http\Controllers\Auth\AddUserController;
+use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\LayoutController;
 
 Route::get('/', function () {
@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/admin/users', [AddUserController::class, 'index'])->name('admin.users.index');
+Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
 
 Route::get('/files', [FileController::class, 'index'])->name('files.index');
 Route::middleware('auth', 'check.file.acceess')->group(function () {
@@ -66,10 +66,10 @@ Route::get('/admin', function () {
 
 Route::get('/user/{name}', function () {
     $files = app(FileController::class)->index(request());
-    $folders = app(FolderController::class)->index();
+    $result = app(FolderController::class)->index();
     $layout = app(LayoutController::class)->getLayout();
 
-    return view('user.userDashboard', compact('files', 'folders', 'layout'));
+    return view('user.userDashboard', compact('files', 'result', 'layout'));
 }) -> middleware(['auth', 'verified', 'role:user'])->name('user');
 
 require __DIR__.'/auth.php';

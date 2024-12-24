@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('size');
             $table->string('user_id');
             $table->string('folder_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade');
         });
     }
 

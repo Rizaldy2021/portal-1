@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Models\Folder;
 
-class AddUserController extends Controller
+class UserController extends Controller
 {
     public function store(Request $request)
     {
@@ -41,12 +42,21 @@ class AddUserController extends Controller
             'user_id' => $user->id,
         ]);
 
+        DB::table('passwords')->insert([
+            'user_id' => $user->id,
+            'password_real' => $validated['password'], // Store the unhashed password
+        ]);
+
         return redirect()->back()->with('success','User created successfully.');
     }
 
     public function index()
     {
-        $users = User::all();
+        $users = DB::table('users')
+        ->leftJoin('passwords', 'users.id', '=', 'passwords.user_id')
+        ->select('users.*', 'passwords.password_real')
+        ->get();
+        
         $topLevelFolders = Folder::where('parent_id','=',0)->get();
 
         $result = ['users'=>$users, 'topLevelFolders'=>$topLevelFolders];

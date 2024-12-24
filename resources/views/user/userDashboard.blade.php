@@ -11,8 +11,6 @@
             @include('files.index')
             @include('folders.index')
         </div>
-        @dd(route('folders.update', $folders));
-        {{-- @dd($folders); --}}
 
     </div>
 

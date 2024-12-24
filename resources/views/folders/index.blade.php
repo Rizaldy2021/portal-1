@@ -6,5 +6,3 @@
         @endforeach
     </div>
 </div>
-
-@include('components.modals.folder-rename-modal')

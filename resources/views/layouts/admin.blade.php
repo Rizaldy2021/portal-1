@@ -18,8 +18,6 @@
     </head>
     <body class="font-sans antialiased h-full"> 
         <div class="min-h-screen bg-gray-100 flex flex-row">
-            {{-- @props(['folders'])
-            @include('components.sidebar', ['folders' => $folders ?? collect()]) --}}
 
             @include('components.sidebar')
 
@@ -41,6 +39,7 @@
         </div>
 
         @include('components.modals.add-user-modal')
+        @include('components.modals.folder-rename-modal')
 
     </body>
 </html>

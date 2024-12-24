@@ -11,10 +11,22 @@
     <div class="flex flex-col gap-2 p-6 text-center mt-12">
         <h3 class="text-balance text-xl font-bold text-neutral-900 lg:text-2xl dark:text-white" aria-describedby="profileDescription">{{ $user->name }}</h3>
         <span class="mx-auto w-fit bg-black px-2 py-1 text-xs text-neutral-100 dark:bg-white dark:text-black rounded-md">{{ $user->email }}</span>
-        <span class="mx-auto w-fit bg-black px-2 py-1 text-xs text-neutral-100 dark:bg-white dark:text-black rounded-md">{{ $user->password }}</span>
-        <p id="profileDescription" class="mt-4 text-pretty text-sm">
-            Making tech products user-friendly and delightful. Looking to
-            collaborate and create meaningful digital products.
-        </p>
+        <span class="mx-auto w-fit bg-black px-2 py-1 text-xs text-neutral-100 dark:bg-white dark:text-black rounded-md">{{ $user->password_real }}</span>
+    </div>
+
+    <div class="flex justify-end gap-2 m-2">
+        <x-danger-button class="text-md" id="delete-user-btn"
+            data-user-id="{{ $user->id }}"
+        >
+            {{ __('Delete') }}
+        </x-danger-button>
+        
+        <x-primary-button class="text-md" id="edit-user-btn" x-on:click="openEditModal($event)"
+            data-user-id="{{ $user->id }}"
+            data-user-name="{{ $user->name }}"
+            data-user-email="{{ $user->email }}"
+        >
+            {{ __('Edit') }}
+        </x-primary-button>
     </div>
 </div>

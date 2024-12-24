@@ -138,9 +138,16 @@ folderCards.forEach((folderCard) => {
                     console.log({ folderId, folderName, updateUrl });
 
                     const form = document.getElementById("rename-folder-form");
+
+                    if (!form) {
+                        console.error("Form element not found!");
+                        return;
+                    }
+
                     form.action = updateUrl;
-                    document.getElementById("folder-id").value = folderId;
-                    document.getElementById("folder-name").value = folderName;
+                    document.getElementById("modal-folder-id").value = folderId;
+                    document.getElementById("modal-folder-name").value =
+                        folderName;
 
                     window.dispatchEvent(
                         new CustomEvent("open-modal", {
@@ -182,4 +189,30 @@ document.addEventListener("DOMContentLoaded", () => {
             modal.classList.remove("flex");
         });
     }
+});
+
+document.addEventListener("alpine:init", () => {
+    Alpine.data("editUserModal", () => ({
+        open: false,
+        userName: "",
+        userEmail: "",
+        userId: null,
+
+        openEditModal(event) {
+            this.userId = event.target.getAttribute("data-user-id");
+            this.userName = event.target.getAttribute("data-user-name");
+            this.userEmail = event.target.getAttribute("data-user-email");
+            this.open = true;
+        },
+
+        submitForm() {
+            // Handle the form submission logic here (e.g., send data to the server)
+            console.log({
+                userId: this.userId,
+                userName: this.userName,
+                userEmail: this.userEmail,
+            });
+            this.open = false;
+        },
+    }));
 });
