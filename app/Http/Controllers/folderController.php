@@ -21,14 +21,12 @@ class folderController extends Controller
             $result['folders'] = Folder::with(['children','files'])->whereNull('parent_id')->get();
             $result['topLevelFolders'] = Folder::whereNull('parent_id')->get();
         } else {
-            $folders = Folder::with(['children','files'])
+            $result['folders'] = Folder::with(['children','files'])
                 ->whereNull('parent_id')
                 ->where('user_id', Auth::id())
                 ->get();
         }
 
-        // return view('folders.index', compact('folders'));
-        // return [$folders, $topLevelFolders];
         return $result;
     }
 

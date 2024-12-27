@@ -21,7 +21,7 @@
 
             @include('components.sidebar')
 
-            <div>
+            <div class="flex flex-col w-full">
                 <!-- Page Heading -->
                 @hasSection('header')
                     <header class="bg-white shadow">
@@ -32,7 +32,7 @@
                 @endif
 
                 <!-- Page Content -->
-                <main class="flex w-full h-fit">
+                <main class="flex h-full bg-white">
                     @yield('content')
                 </main>
             </div>

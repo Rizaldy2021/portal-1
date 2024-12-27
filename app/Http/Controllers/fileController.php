@@ -26,7 +26,6 @@ class fileController extends Controller
             $files = File::where('user_id', Auth::user()->id)->get();
         }
 
-        // return view('test', compact('files'));
         return $files;
     }
 

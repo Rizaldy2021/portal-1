@@ -18,11 +18,8 @@ return new class extends Migration
             $table->string('path');
             $table->string('type');
             $table->string('size');
-            $table->string('user_id');
-            $table->string('folder_id');
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('folder_id')->nullable()->constrained('folders')->cascadeOnDelete();
         });
     }
 

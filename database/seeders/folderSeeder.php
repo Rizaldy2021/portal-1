@@ -1,11 +1,12 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Folder;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Folder;
 
-class folderSeeder extends Seeder
+class FolderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,24 +14,9 @@ class folderSeeder extends Seeder
     public function run(): void
     {
         $folder = Folder::create([
-            'name' => 'Folder 4',
+            'name' => 'coba',
             'description' => 'This is a folder',
-            'user_id' => '4',
-        ]);
-        $folder = Folder::create([
-            'name' => 'Folder 2',
-            'description' => 'This is a folder',
-            'user_id' => '4',
-        ]);
-        $folder = Folder::create([
-            'name' => 'Folder 3',
-            'description' => 'This is a folder',
-            'user_id' => '4',
-        ]);
-        $folder = Folder::create([
-            'name' => 'Folder 5',
-            'description' => 'This is a folder',
-            'user_id' => '4',
+            'user_id' => '2',
         ]);
     }
 }

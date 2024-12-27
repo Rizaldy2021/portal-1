@@ -7,11 +7,13 @@
 @endsection
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    @foreach ($result['users'] as $user)
+<div class="h-fit p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach ($result['users'] as $user)
         <x-user-card :user="$user" />
-    @endforeach
+        @endforeach
+    </div>
 </div>
 @endsection
 
-@include('components.modals.edit-user-modal')
+{{-- @include('components.modals.edit-user-modal') --}}
