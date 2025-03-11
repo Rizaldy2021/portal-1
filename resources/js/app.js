@@ -4,170 +4,13 @@ import "filepond/dist/filepond.min.css";
 import VanillaContextMenu from "vanilla-context-menu";
 
 import Alpine from "alpinejs";
+import focus from "@alpinejs/focus";
+
+Alpine.plugin(focus);
 
 window.Alpine = Alpine;
 
 Alpine.start();
-
-const inputElement = document.querySelector('input[type="file"].filepond');
-
-if (inputElement) {
-    const csrfToken = document.head
-        .querySelector('meta[name="csrf-token"]')
-        .getAttribute("content");
-
-    const pond = FilePond.create(inputElement, {
-        server: {
-            process: {
-                url: "/upload",
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": csrfToken,
-                },
-            },
-        },
-        allowMultiple: true,
-        dropOnElement: true,
-        // allowProcessment: false,
-    });
-
-    console.log("FilePond initialized:", pond);
-
-    // Drop zone logic
-    const dropElement = document.querySelector("main");
-
-    if (dropElement) {
-        console.log("Drop zone found:", dropElement);
-
-        // Prevent default drag behaviors
-        ["dragenter", "dragover", "dragleave", "drop"].forEach((event) => {
-            dropElement.addEventListener(event, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log(`Event ${event} triggered`);
-            });
-        });
-
-        // Highlight drop zone on drag over
-        dropElement.addEventListener("dragover", () => {
-            dropElement.classList.add("highlight");
-            console.log("Drag over drop zone");
-        });
-
-        // Remove highlight on drag leave or drop
-        ["dragleave", "drop"].forEach((event) => {
-            dropElement.addEventListener(event, () => {
-                dropElement.classList.remove("highlight");
-                console.log(`Event ${event}: highlight removed`);
-            });
-        });
-
-        // Handle file drop
-        dropElement.addEventListener("drop", (e) => {
-            const files = e.dataTransfer.files;
-            console.log("Files dropped:", files);
-
-            if (files.length > 0) {
-                pond.addFiles(files);
-                console.log("Files added to FilePond");
-            } else {
-                console.error("No files found in drop event");
-            }
-        });
-    } else {
-        console.error("Drop zone element not found");
-    }
-} else {
-    console.error("File input element not found");
-}
-
-new VanillaContextMenu({
-    scope: document.getElementById("file-explorer"),
-    menuItems: [
-        {
-            label: "Buat Folder",
-            callback: () => {
-                console.log("Buat Folder");
-
-                window.dispatchEvent(
-                    new CustomEvent("open-modal", {
-                        detail: "new-folder-modal",
-                    })
-                );
-            },
-        },
-        {
-            label: "Upload File",
-            callback: () => {
-                console.log("Upload File");
-
-                window.dispatchEvent(
-                    new CustomEvent("open-modal", {
-                        detail: "file-upload-modal",
-                    })
-                );
-            },
-        },
-    ],
-    transitionDuration: 75,
-    theme: "white",
-    customClass: "custom-context-menu-cls",
-});
-
-const folderCards = document.querySelectorAll(".folder-card");
-
-folderCards.forEach((folderCard) => {
-    new VanillaContextMenu({
-        scope: folderCard,
-        menuItems: [
-            {
-                label: "Rename Folder",
-                callback: () => {
-                    console.log("Rename Folder");
-
-                    const folderId = folderCard.getAttribute("data-folder-id");
-                    const folderName =
-                        folderCard.getAttribute("data-folder-name");
-                    const updateUrlTemplate =
-                        folderCard.getAttribute("data-update-url");
-                    const updateUrl = updateUrlTemplate.replace(
-                        ":folder_id",
-                        folderId
-                    );
-
-                    console.log({ folderId, folderName, updateUrl });
-
-                    const form = document.getElementById("rename-folder-form");
-
-                    if (!form) {
-                        console.error("Form element not found!");
-                        return;
-                    }
-
-                    form.action = updateUrl;
-                    document.getElementById("modal-folder-id").value = folderId;
-                    document.getElementById("modal-folder-name").value =
-                        folderName;
-
-                    window.dispatchEvent(
-                        new CustomEvent("open-modal", {
-                            detail: "rename-folder-modal",
-                        })
-                    );
-                },
-            },
-            {
-                label: "Hapus Folder",
-                callback: () => {
-                    console.log("Hapus Folder");
-                },
-            },
-        ],
-        transitionDuration: 75,
-        theme: "white",
-        customClass: "custom-context-menu-cls",
-    });
-});
 
 document.addEventListener("DOMContentLoaded", () => {
     const openButton = document.getElementById("open-modal");
@@ -191,28 +34,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-document.addEventListener("alpine:init", () => {
-    Alpine.data("editUserModal", () => ({
-        open: false,
-        userName: "",
-        userEmail: "",
-        userId: null,
+document.addEventListener("DOMContentLoaded", () => {
+    const openButton = document.getElementById("edit-user-btn");
+    const modal = document.getElementById("edit-user-modal");
+    const closeButton = document.getElementById("close-edit-modal");
 
-        openEditModal(event) {
-            this.userId = event.target.getAttribute("data-user-id");
-            this.userName = event.target.getAttribute("data-user-name");
-            this.userEmail = event.target.getAttribute("data-user-email");
-            this.open = true;
-        },
+    if (openButton && modal) {
+        openButton.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        });
+    }
 
-        submitForm() {
-            // Handle the form submission logic here (e.g., send data to the server)
-            console.log({
-                userId: this.userId,
-                userName: this.userName,
-                userEmail: this.userEmail,
-            });
-            this.open = false;
-        },
-    }));
+    // Close the modal
+    if (closeButton && modal) {
+        closeButton.addEventListener("click", () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        });
+    }
+});
+
+setTimeout(() => {
+    console.log("Users Index: Executing manually after delay.");
+}, 1000);
+
+console.log(window.location.pathname);
+console.log(typeof document.addEventListener);
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.editUser = function (userId) {
+        console.log("editUser called with ID:", userId);
+
+        const userCard = document.querySelector(
+            `.user-card[data-user-id='${userId}']`
+        );
+
+        if (!userCard) {
+            console.error("User card not found for ID:", userId);
+            return;
+        }
+
+        const userName = userCard.getAttribute("data-user-name");
+        const userEmail = userCard.getAttribute("data-user-email");
+        const password = userCard.getAttribute("data-user-password");
+
+        console.log("Opening modal for user:", userName, userEmail, password);
+
+        const form = document.getElementById("edit-user-form");
+
+        // form.action = updateUrl;
+        // document.getElementById("modal-user-id").value = userId;
+        document.getElementById("modal-user-name").value = userName;
+        document.getElementById("modal-user-email").value = userEmail;
+        document.getElementById("modal-user-password").value = password;
+
+        // Buka modal dengan Alpine.js
+        window.dispatchEvent(
+            new CustomEvent("open-modal", {
+                detail: "edit-user-modal",
+            })
+        );
+    };
 });

@@ -26,7 +26,7 @@ class folderController extends Controller
                 ->where('user_id', Auth::id())
                 ->get();
         }
-
+// dd($result);
         return $result;
     }
 
@@ -61,10 +61,19 @@ class folderController extends Controller
             'parent_id' => 'required',
         ]);
 
+        $userId = Auth::id();
+
+        if ($request->parent_id) {
+            $parentFolder = Folder::find($request->parent_id);
+            if($parentFolder) {
+                $userId = $parentFolder->user_id;
+            }
+        }
+
         Folder::create([
             'name' => $request->name,
             'description' => $request->description,
-            'user_id' => Auth::id(),
+            'user_id' => $userId,
             'parent_id' => $request->parent_id ?? null
         ]);
         

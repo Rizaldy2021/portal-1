@@ -21,7 +21,7 @@ Route::get('/view', function () {
 })->name('view');
 
 Route::get('/coba', function () {
-    return view('upload');
+    return view('landing');
 });
 
 Route::get('/dashboard', function () {
@@ -29,6 +29,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::post('/upload', [FileUploadController::class, 'upload'])->name('files.upload');
+
+Route::put('/update', [UserController::class, 'update'])->name('users.update');
 
 Route::post('/folders', [FolderController::class, 'store'])->name('folders.store');
 
@@ -41,7 +43,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+// Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+
+Route::get('/users', function () {
+    $result = app(UserController::class)->index();
+    $layout = app(LayoutController::class)->getLayout();
+
+    return view('admin.users.index', compact('result', 'layout'));
+})->middleware(['auth', 'verified', 'role:admin'])->name('admin.users.index');
 
 Route::get('/files', [FileController::class, 'index'])->name('files.index');
 Route::middleware('auth', 'check.file.acceess')->group(function () {
@@ -63,6 +72,13 @@ Route::get('/admin', function () {
 
     return view('admin.adminDashboard', compact('files', 'result', 'layout'));
 }) -> middleware(['auth', 'verified', 'role:admin'])->name('admin');
+
+Route::get('/test', function () {
+    $result = app(FolderController::class)->index();
+    $layout = app(LayoutController::class)->getLayout();
+
+    return view('admin.test1', compact('layout', 'result'));
+}) -> name('test');
 
 Route::get('/user/{name}', function () {
     $files = app(FileController::class)->index(request());

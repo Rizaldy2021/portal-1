@@ -61,6 +61,30 @@ class UserController extends Controller
 
         $result = ['users'=>$users, 'topLevelFolders'=>$topLevelFolders];
 
-        return view('admin.users.index', compact('result'));
+        // return view('admin.users.index', compact('result'));
+        return $result;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name'=> ['required', 'string', 'max:255'],
+            'email'=> ['required','string','email', 'max:255'],
+            'password'=> ['required','string','min:8'],
+        ]);
+
+        $user = User::find($id);
+
+        $user->update([
+            'name'=> $request->name,
+            'email'=> $request->email,
+            'password'=> Hash::make($request->password),
+        ]);
+
+        DB::table('passwords')->where('user_id', $id)->update([
+            'password_real' => $request->password, // Update the unhashed password
+        ]);
+
+        return redirect()->back()->with('success','User updated successfully.');
     }
 }

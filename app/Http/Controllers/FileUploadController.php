@@ -43,12 +43,19 @@ class FileUploadController extends Controller
         $fileType = $file->getClientMimeType();
         $fileSize = $file->getSize();
 
+        $userId = Auth::id();
+
+        if($folderId) {
+            $parentFolder = DB::table('folders')->where('id', $folderId)->first();
+            $userId = $parentFolder->user_id;
+        }
+
         DB::table('files')->insert([
             'name' => $fileName,
             'path' => $filePath,
             'type' => $fileType,
             'size' => $fileSize,
-            'user_id' => Auth::check() ? Auth::id() : null,
+            'user_id' => $userId,
             'folder_id' => $folderId ?? 0,
             'created_at' => now(),
             'updated_at' => now(),
