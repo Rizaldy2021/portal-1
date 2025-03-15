@@ -1,9 +1,9 @@
 @extends($layout)
 
 @section('header')
-<h2 class="font-semibold text-xl text-gray-800 leading-tight">
-    {{ __('File Explorer') }} 
-</h2>
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        {{ __('File Explorer') }}
+    </h2>
 @endsection
 
 @section('content')
@@ -11,8 +11,4 @@
         @include('files.index')
         @include('folders.index')
     </div>
-
-@include('components.modals.file-upload-modal')
-@include('components.modals.new-folder-modal')
-
 @endsection

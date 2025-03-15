@@ -19,7 +19,7 @@ class CheckFileAccess
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        // $file = request()->route('id');
+
         $fileId = $request->route('id');
 
         $file = File::find($fileId);
@@ -27,9 +27,7 @@ class CheckFileAccess
         $userRole = $this->hasRole();
 
         if(!$file || ($file->user_id != $user->id && $userRole->role !='admin')) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 403);
+            return abort(403, 'Unauthorized');
         }
 
         return $next($request);

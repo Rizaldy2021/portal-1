@@ -20,11 +20,8 @@ class CheckFolderAccess
     {
         $user = $request->user();
 
-        // dd($user, $user->id, $request);
         if (!$user) {
-            return response()->json([
-                'message' => 'User not authenticated',
-            ], 401);
+            return abort(401, 'Unauthorized');
         }
 
         $folderId = $request->route('id');
@@ -33,12 +30,8 @@ class CheckFolderAccess
 
         $userRole = $this->hasRole();
 
-        // dd($folder);
-
         if ($folder->user_id != $user->id && $userRole->role != 'admin') {
-            return response()->json([
-                'message' => 'Forbidden',
-            ], 403);
+            return abort(403, 'Forbidden');
         }
 
         return $next($request);

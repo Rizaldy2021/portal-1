@@ -9,7 +9,7 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\LayoutController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
 });
 
 Route::get('/view', function () {
