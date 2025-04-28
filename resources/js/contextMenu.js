@@ -83,6 +83,33 @@ folderCards.forEach((folderCard) => {
                 label: "Hapus Folder",
                 callback: () => {
                     console.log("Hapus Folder");
+
+                    const folderId = folderCard.getAttribute("data-folder-id");
+                    const updateUrlTemplate =
+                        folderCard.getAttribute("data-update-url");
+                    const updateUrl = updateUrlTemplate.replace(
+                        ":folder_id",
+                        folderId
+                    );
+
+                    console.log({ folderId, updateUrl });
+
+                    const form = document.getElementById("delete-folder-form");
+
+                    if (!form) {
+                        console.error("Form element not found!");
+                        return;
+                    }
+
+                    form.action = updateUrl;
+                    document.getElementById("modal-delete-folder-id").value =
+                        folderId;
+
+                    window.dispatchEvent(
+                        new CustomEvent("open-modal", {
+                            detail: "delete-folder-modal",
+                        })
+                    );
                 },
             },
         ],

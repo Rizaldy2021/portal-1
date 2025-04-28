@@ -137,7 +137,8 @@ class folderController extends Controller
         $this->authorizeAccess($folder);
 
         $folder->delete();
-        return redirect()->route('folders.index')->with('success', 'Folder deleted successfully.');
+
+        return redirect()->back()->with('success', 'Folder deleted successfully.');
     }
 
     private function authorizeAccess(Folder $folder)

@@ -64,6 +64,8 @@ Route::middleware(['auth', 'check.folder.access'])->group(function () {
     Route::get('/folders/{id}', [FolderController::class, 'show'])->name('folders.show');
 });
 
+Route::delete('/folders/{folder}', [FolderController::class, 'destroy'])->name('folder.destroy');
+
 Route::get('/admin', function () {
     $files = app(FileController::class)->index(request());
     $result = app(FolderController::class)->index();
