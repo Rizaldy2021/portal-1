@@ -30,8 +30,6 @@ Route::get('/dashboard', function () {
 
 Route::post('/upload', [FileUploadController::class, 'upload'])->name('files.upload');
 
-Route::put('/update', [UserController::class, 'update'])->name('users.update');
-
 Route::post('/folders', [FolderController::class, 'store'])->name('folders.store');
 
 Route::put('/folders/{folder_id}', [FolderController::class, 'update'])->name('folders.update');

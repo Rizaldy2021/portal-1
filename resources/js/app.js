@@ -34,27 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const openButton = document.getElementById("edit-user-btn");
-    const modal = document.getElementById("edit-user-modal");
-    const closeButton = document.getElementById("close-edit-modal");
-
-    if (openButton && modal) {
-        openButton.addEventListener("click", () => {
-            modal.classList.remove("hidden");
-            modal.classList.add("flex");
-        });
-    }
-
-    // Close the modal
-    if (closeButton && modal) {
-        closeButton.addEventListener("click", () => {
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
-        });
-    }
-});
-
 setTimeout(() => {
     console.log("Users Index: Executing manually after delay.");
 }, 1000);
@@ -79,12 +58,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const userEmail = userCard.getAttribute("data-user-email");
         const password = userCard.getAttribute("data-user-password");
 
-        console.log("Opening modal for user:", userName, userEmail, password);
+        const updateUrlTemplate = userCard.getAttribute("data-update-url");
+        const updateUrl = updateUrlTemplate.replace(":user_id", userId);
+
+        console.log({
+            userId,
+            userName,
+            userEmail,
+            password,
+            updateUrl,
+        });
+
+        console.log(
+            "Opening modal for user:",
+            userName,
+            userEmail,
+            password,
+            userId
+        );
 
         const form = document.getElementById("edit-user-form");
 
-        // form.action = updateUrl;
-        // document.getElementById("modal-user-id").value = userId;
+        form.action = updateUrl;
+        document.getElementById("modal-user-id").value = userId;
         document.getElementById("modal-user-name").value = userName;
         document.getElementById("modal-user-email").value = userEmail;
         document.getElementById("modal-user-password").value = password;

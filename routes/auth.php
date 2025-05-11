@@ -60,4 +60,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('store', [UserController::class, 'store'])
         ->name('users.store');
-});
+
+    Route::put('users/{id}', [UserController::class, 'update'])
+        ->name('users.update');
+
+    Route::delete('users/destroy/{id}', [UserController::class, 'destroy'])
+        ->name('users.destroy');
+    });

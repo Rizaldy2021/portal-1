@@ -93,26 +93,6 @@ class folderController extends Controller
 
         return view('folders.edit', compact('folder', 'parentFolders'));
     }
-
-    // public function update(Request $request, Folder $folder)
-    // {
-    //     // $this->authorizeAccess($folder);
-
-    //     $request->validate([
-    //         'name' => 'required|String|max:255',
-    //         'description' => 'nullable|String|max:255',
-    //         'parent_id' => 'nullable|exists:folders,id',
-    //     ]);
-        
-    //     $folder->update([
-    //         'name' => $request->name,
-    //         'description' => $request->description,
-    //         'parent_id' => $request->parent_id,
-    //     ]);
-
-    //     return redirect()->route('folders.index')->with('success', 'Folder updated successfully.');
-    // }
-
     
     public function update(Request $request, $folder_id)
     {

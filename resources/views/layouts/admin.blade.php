@@ -90,3 +90,28 @@
 </body>
 
 </html>
+<script>
+    function openDeleteModal({
+        title,
+        message,
+        actionUrl,
+        itemId = null
+    }) {
+        document.getElementById("delete-modal-title").textContent = title;
+        document.getElementById("delete-modal-message").textContent = message;
+
+        const form = document.getElementById("delete-item-form");
+        form.action = actionUrl;
+
+        const hiddenInput = document.getElementById("modal-delete-item-id");
+        if (itemId !== null && hiddenInput) {
+            hiddenInput.value = itemId;
+        }
+
+        window.dispatchEvent(
+            new CustomEvent("open-modal", {
+                detail: "delete-item-modal"
+            })
+        );
+    }
+</script>
