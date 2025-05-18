@@ -9,7 +9,7 @@
 @section('content')
     <div :folders="$folders" class="w-full">
         <div class="bg-white p-4 h-full w-full flex flex-wrap" id="file-explorer">
-            <div class="flex flex-col gap-4 drop-zone" id="drop-element">
+            <div class="flex flex-col gap-4 drop-zone w-full" id="drop-element">
                 @include('files.index')
                 @include('folders.index')
             </div>

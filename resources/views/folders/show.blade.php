@@ -1,7 +1,13 @@
 @extends($layout)
 
+@section('header')
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        {{ __('File Explorer') }}
+    </h2>
+@endsection
+
 @section('content')
-    <div class="bg-white pr-4 p-4 w-screen" id="file-explorer">
+    <div class="bg-white pr-4 p-4 w-full" id="file-explorer">
         <h1 class="text-2xl font-medium mb-4">{{ $folder->name }}</h1>
         <div class="flex flex-col gap-10">
             <div class="parent-folder">
