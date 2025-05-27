@@ -9,18 +9,22 @@
 @section('content')
     <div class="bg-white pr-4 p-4 w-full" id="file-explorer">
         <div class="flex flex-col gap-10">
-            <div class="mb-4">
-                <h4 class="text-lg font-medium text-gray-600">Users</h4>
-                @if (collect($result['users'])->isEmpty())
-                    <p>No users found.</p>
-                @else
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        @foreach ($result['users'] as $user)
-                            <x-user-card :user="$user" />
-                        @endforeach
-                    </div>
-                @endif
-            </div>
+
+            @if (!empty($result['users']))
+                <div class="mb-4">
+                    <h4 class="text-lg font-medium text-gray-600">Users</h4>
+                    @if (collect($result['users'])->isEmpty())
+                        <p>No users found.</p>
+                    @else
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            @foreach ($result['users'] as $user)
+                                <x-user-card :user="$user" />
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            @endif
+
             <div class="mb-4">
                 <h4 class="text-lg font-medium text-gray-600">Folders</h4>
                 @if ($result['folders']->isEmpty())
@@ -33,6 +37,7 @@
                     </div>
                 @endif
             </div>
+
             <div>
                 <h4 class="text-lg font-medium text-gray-600">Files</h4>
                 @if ($result['files']->isEmpty())
@@ -45,6 +50,7 @@
                     </div>
                 @endif
             </div>
+
         </div>
     </div>
 @endsection
