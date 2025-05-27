@@ -7,6 +7,7 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/', function () {
     return view('landing');
@@ -55,9 +56,10 @@ Route::middleware('auth', 'check.file.acceess')->group(function () {
     Route::get('/files/{id}', [FileController::class, 'view'])->name('files.view');
 });
 
-
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
+
 Route::middleware(['auth', 'check.folder.access'])->group(function () {
     Route::get('/folders/{id}', [FolderController::class, 'show'])->name('folders.show');
 });

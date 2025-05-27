@@ -26,7 +26,7 @@ class folderController extends Controller
                 ->where('user_id', Auth::id())
                 ->get();
         }
-// dd($result);
+
         return $result;
     }
 
