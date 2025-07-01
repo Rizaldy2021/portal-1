@@ -14,7 +14,7 @@
             <span class="sr-only">homepage</span>
             <div class="flex items-center gap-2">
                 <img src="{{ asset('img/logo.svg') }}" alt="logo" class="w-[24px]">
-                <p><span class="font-bold">Dashboard</span></p>
+                <p><span class="font-bold">SITILAP</span></p>
             </div>
         </a>
 
